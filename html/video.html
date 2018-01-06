@@ -1,0 +1,259 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+        <meta name="format-detection" content="tephone=no,email=no,date=no,address=no">
+        <style type="text/css">
+            html{ background-color: white; }
+            header{ border-bottom: 1px solid #ccc; padding: 25px 0; }
+            span {
+                padding: 10px 15px;
+                margin: 10px;
+                display: inline-block;
+                background-color: #e8e8e8;
+            }
+            .hover{ opacity: .4; }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>详情页-播放器</h1>
+            <mark>
+                这里可以是封面图
+            </mark>
+        </header>
+        <!--
+        <span tapmode="hover" onclick="fnPlay()">play</span>
+        -->
+        <span tapmode="hover" onclick="fnOpen()">打开播放</span>
+        <!--<span tapmode="hover" onclick="fnSetPath()">setPath</span>-->
+        <span tapmode="hover" onclick="fnPause()">暂停</span>
+        <span tapmode="hover" onclick="fnStart()">播放</span>
+        <span tapmode="hover" onclick="fnStop()">停止</span>
+        <span tapmode="hover" onclick="fnClose()">关闭</span>
+        <!--
+        <span tapmode="hover" onclick="fnShow()">show</span>
+        <span tapmode="hover" onclick="fnHide()">hide</span>
+        -->
+        <!--<span tapmode="hover" onclick="fnFullScreen()">全屏</span>-->
+        <!--<span tapmode="hover" onclick="fnCancelFullScreen()">取消全屏</span>-->
+        <span tapmode="hover" onclick="fnForward()">快进</span>
+        <span tapmode="hover" onclick="fnRewind()">快退</span>
+        <!--
+        <span tapmode="hover" onclick="fnSeekTo()">seekTo</span>
+        -->
+        <!--
+        <span tapmode="hover" onclick="fnSetBrightness()">setBrightness</span>
+        <span tapmode="hover" onclick="fnGetBrightness()">getBrightness</span>
+        <span tapmode="hover" onclick="fnSetVolume()">setVolume</span>
+        <span tapmode="hover" onclick="fnGetVolume()">getVolume</span>
+        <span tapmode="hover" onclick="fnAddEventListener()">addEventListener</span>
+        <span tapmode="hover" onclick="fnRemoveEventListener()">removeEventListener</span>
+        <span tapmode="hover" onclick="fnSetRect()">setRect</span>
+        -->
+        <p>PS：双击全屏/取消全屏</p>
+
+    </body>
+</html>
+<script type="text/javascript">
+    var videoPlayer;
+    apiready = function() {
+        videoPlayer = api.require('videoPlayer');
+    };
+
+    function fnPlay(){
+        var videoPlayer = api.require('videoPlayer');
+        videoPlayer.play({
+            texts: {
+                head: {
+                    title: '顶部文字'
+                }
+            },
+            styles: {
+                head: { 
+                    bg: 'rgba(0.5,0.5,0.5,0.7)', 
+                    height: 44,
+                    titleSize: 16,
+                    titleColor: '#fff',
+                    backSize: 20,
+                    backImg: 'widget://image/back.png', 
+                    setSize: 20,
+                    setImg: 'widget://image/set.png' 
+                },
+                
+            },
+            path: 'http://resource.apicloud.com/video/apicloud3.mp4',
+            autoPlay:true
+        },function(ret, err) {
+             alert(JSON.stringify(ret));
+            if (ret) {
+                alert(JSON.stringify(ret));
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+
+    function fnOpen(){
+        videoPlayer.open({
+            rect:{
+                y:0,
+                h:150
+            },
+            autoPlay: true,
+            path: 'http://resource.apicloud.com/video/apicloud3.mp4'
+        }, function(ret, err){        
+            if( ret.status ){
+                //alert( JSON.stringify( ret ) );
+            }else{
+                //alert( JSON.stringify( err ) );
+            }
+        });
+        videoPlayer.addEventListener({
+            name:'play'
+        }, function(ret, err){        
+            if( ret.eventType == 'playing' ){
+                console.log(ret.current);
+                if(ret.current >= 30){
+                    fnStop();
+                    alert('已播放30秒');
+                }
+            }
+        });
+        videoPlayer.addEventListener({
+            name:'swipeLeft' //左划
+            }, function(ret, err){        
+                if( ret ){
+                    videoPlayer.rewind({
+                        seconds: 5
+                    });
+                }
+         });
+         videoPlayer.addEventListener({
+            name:'swipeRight' //右划
+            }, function(ret, err){        
+                if( ret ){
+                    videoPlayer.forward({
+                        seconds: 5
+                    });
+                }
+         });
+         var fullScreen = false;
+         videoPlayer.addEventListener({
+            name:'doubleClick' //双击
+            }, function(ret, err){        
+                if( ret ){
+                    if(fullScreen){
+                        fullScreen = false;
+                        api.setScreenOrientation({
+                            orientation: 'auto'
+                        });
+                        videoPlayer.cancelFullScreen();
+                    }else{
+                        fullScreen = true;
+                        videoPlayer.fullScreen();
+                    }
+                }
+         });
+    }
+    function fnSetPath(){
+        videoPlayer.setPath({
+            path: 'http://resource.apicloud.com/video/apicloud3.mp4'
+        });
+    }
+    function fnStart(){
+        videoPlayer.start();
+    }
+    function fnPause(){
+        videoPlayer.pause();
+    }
+    function fnStop(){
+        videoPlayer.stop();
+    }
+    function fnClose(){
+        videoPlayer.close();
+    }
+    function fnShow(){
+        videoPlayer.show();
+    }
+    function fnHide(){
+        videoPlayer.hide();
+    }
+    function fnFullScreen(){
+        videoPlayer.fullScreen();
+    }
+    function fnCancelFullScreen(){
+        videoPlayer.cancelFullScreen();
+    }
+    function fnForward(){
+        videoPlayer.forward({
+            seconds: 5
+        });
+    }
+    function fnRewind(){
+        videoPlayer.rewind({
+            seconds: 5
+        });
+    }
+    function fnSeekTo(){
+        videoPlayer.seekTo({
+            seconds: 20
+        });
+    }
+    function fnSetBrightness(){
+        videoPlayer.setBrightness({
+            brightness: 50
+        });
+    }
+    function fnGetBrightness(){
+        videoPlayer.getBrightness(function( ret, err ){        
+            if( ret ){
+                alert( JSON.stringify( ret ) );
+            }else{
+                alert( JSON.stringify( err ) );
+            }
+        });
+    }
+    function fnSetVolume(){
+        videoPlayer.setVolume({
+            volume: 0.6
+        });
+    }
+    function fnGetVolume(){
+        videoPlayer.getVolume(function( ret, err ){        
+            if( ret ){
+                alert( JSON.stringify( ret ) );
+            }else{
+                alert( JSON.stringify( err ) );
+            }
+        });
+    }
+    function fnAddEventListener(){
+        videoPlayer.addEventListener({
+            name:'leftUp'
+        }, function(ret, err){        
+            if( ret ){
+                alert( JSON.stringify( ret ) );
+            }else{
+                alert( JSON.stringify( err ) );
+            }
+        });
+    }
+    function fnRemoveEventListener(){
+        videoPlayer.removeEventListener({
+            name: 'leftUp'
+        });
+    }
+    function fnSetRect(){
+        videoPlayer.setRect({
+            rect:{
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            },
+            fullscreen: true
+        });
+    }
+
+</script>

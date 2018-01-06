@@ -1,0 +1,139 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td,nav,header { margin:0; padding:0; -webkit-box-sizing: border-box; box-sizing: border-box; }
+ol,ul { list-style:none; }
+body, html { font-size:14px; height:100%; 	}
+/*body{ background-color: white; }*/
+body{ color: #333; }
+h1, h2, h3, h4, h5, h6 { font-size:100%; font-weight: normal; }
+a {  text-decoration:none; font-weight: normal; }
+img { border:none; vertical-align: middle; }
+table { border-collapse:collapse; }
+samll{ font-size:30%; }
+th,td{/*  white-space:nowrap;text-overflow:ellipsis;overflow:hidden;-webkit-text-overflow:ellipsis; max-width:600px; */ }
+.fixStatusBar:before{ content: ''; display: block; height: 24px; background-color: #aac864; box-shadow: 0 0 5px #666; }
+body { background-color: #efefef;}
+
+#log{ position: fixed; left: 0 ; top: 0; padding: 10px; background-color: red; color: white; }
+		
+.show{ display: block !important; }
+.hide{ display: none !important; }
+		
+.hover{ opacity: .8; }
+
+.row-nowrap{ overflow: hidden;/* white-space: nowrap;*/ text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp:2; -webkit-box-orient: vertical; }
+
+.flex-wrap{ display: -webkit-box;	display: -webkit-flex;	display: flex; }
+.flex-con{     -webkit-box-flex: 1;     -webkit-flex: 1;    flex: 1;}
+.flex-tow{     -webkit-box-flex: 2;     -webkit-flex: 2;    flex: 2;}
+.flex-vertical{ -webkit-box-orient: vertical;-webkit-flex-flow: column;flex-flow: column;}
+
+.border-t,
+.border-b{ position:relative;  }
+.border-t:before,
+.border-b:after{content: '';  position: absolute;  left: 0;  top:0;  background: #ddd;   right:0;    height: 1px;     -webkit-transform: scaleY(0.5);  transform: scaleY(0.5); -webkit-transform-origin: 0 0;  transform-origin: 0 0; }
+.border-b:after{ top:auto; bottom:0;  }
+
+
+.load-more{ text-align: center; line-height: 42px; color: #888; }
+.load-more:before{ content: '';  -webkit-animation:fa-load-more 1s infinite steps(8); animation:fa-load-more 1s infinite steps(8); width: 22px; height: 22px; display: inline-block; background: url(../img/ic_load_more.png) no-repeat center; background-size: 100% auto; position: relative; top: 6px; margin-right: 10px; }
+.load-more:after{ content: '加载更多…'; }
+.load-more.load-complete:before{ display: none; }
+.load-more.load-complete:after{ content: '没有更多…'; }
+.clearfix{display:block;}
+.clearfix::after{content: '';overflow: hidden;display:block;clear:both;height: 0;font-size:0;visibility: hidden;}
+
+
+@-webkit-keyframes fa-load-more{
+0%{
+	-webkit-transform:rotate(0deg);transform:rotate(0deg)
+	}
+100%{
+	-webkit-transform:rotate(359deg);transform:rotate(359deg)
+	}
+}
+@keyframes fa-load-more{
+	0%{
+		-webkit-transform:rotate(0deg);transform:rotate(0deg)
+		}
+	100%{
+		-webkit-transform:rotate(359deg);transform:rotate(359deg)
+		}
+}
+
+/*	Home bottom navgation section 	*/
+.ic_bottom_nav_home{ background-image: url(../img/ic_bottom_nav_home_v1.png) !important; }
+.ic_bottom_nav_luck{ background-image: url(../img/ic_bottom_nav_luck_v1.png) !important; }
+.ic_bottom_nav_shop{ background-image: url(../img/ic_bottom_nav_shop_v1.png) !important; }
+.ic_bottom_nav_integral{ background-image: url(../img/ic_bottom_nav_integral_v1.png) !important; }
+.ic_bottom_nav_personal{ background-image: url(../img/ic_bottom_nav_personal_v1.png) !important; }
+
+
+
+/*	Head button 	*/
+.ic_select{ background-image: url(../img/ic_select_v1.png) !important; }
+.ic_monny{ background-image: url(../img/ic_monny.png) !important; }
+.ic_arrow_left{ background-image: url(../img/ic_arrow_left.png) !important; }
+.ic_camera{ background-image: url(../img/ic_camera.png) !important; }
+.ic_news{ background-image: url(../img/ic_news.png) !important; }
+.ic_problem{ background-image: url(../img/ic_problem.png) !important; }
+.ic_more{ background-image: url(../img/ic_more.png) !important; }
+.ic_integral{ background-image: url(../img/ic_integral.png) !important; }
+.ic_setting{ background-image: url(../img/ic_setting.png) !important; }
+
+
+
+
+
+/*	Front page content 	*/
+.ic_lock{ background-image: url(../img/ic_lock.png) !important; }
+.ic_user_default{ background-image: url(../img/ic_user_default.png) !important; }
+.ic_arrow_right{ background-image: url(../img/ic_arrow_right.png) !important; }
+.luck_rotate{ background-image: url(../img/luck_rotate.png) !important; }
+.luck_buttons{ background-image: url(../img/luck_buttons.png) !important; }
+.luck_arrow{ background-image: url(../img/luck_arrow.png) !important; }
+.ic_lock_black{ background-image: url(../img/ic_lock_black.png) !important; }
+.ic_shop_avatar{ background-image: url(../img/ic_shop_avatar.png) !important; }
+.ic_choice{ background-image: url(../img/ic_choice_v1.png) !important; }
+.ic_add_subtract{ background-image: url(../img/ic_add_subtract.png) !important; }
+.ic_dotty{ background-image: url(../img/ic_dotty.png) !important; }
+.ic_landmark{ background-image: url(../img/ic_landmark_v3.png) !important; }
+.ic_landmark_v2{ background-image: url(../img/ic_landmark_v2.png) !important; }
+.ic_integral_content{ background-image: url(../img/ic_integral_content.png) !important; }
+.ic_share{ background-image: url(../img/ic_share.png) !important; }
+.ic_search_class{ background-image: url(../img/ic_search_class.png) !important; }
+.ic_cart{ background-image: url(../img/ic_cart.png) !important; }
+.ic_personal_monny{ background-image: url(../img/ic_personal_monny.png) !important; }
+.ic_personal_integral{ background-image: url(../img/ic_personal_integral_v2.png) !important; }
+.ic_personal_member{ background-image: url(../img/ic_personal_member.png) !important; }
+.ic_personal_order{ background-image: url(../img/ic_personal_order_v2.png) !important; }
+.ic_personal_setting{ background-image: url(../img/ic_personal_setting_v2.png) !important; }
+.ic_personal_scan{ background-image: url(../img/ic_personal_scan.png) !important; }
+.ic_personal_coupon{ background-image: url(../img/ic_personal_coupon_v2.png) !important; }
+.ic_personal_aftermarket{ background-image: url(../img/ic_personal_aftermarket_v2.png) !important; }
+.ic_personal_online{ background-image: url(../img/ic_personal_online_v2.png) !important; }
+.ic_authentication{ background-image: url(../img/ic_authentication.png) !important; }
+.ic_purchase{ background-image: url(../img/ic_purchase.png) !important; }
+.ic_search{ background-image: url(../img/ic_search_v1.png) !important; }
+.ic_choice_pay{ background-image: url(../img/ic_choice_pay.png) !important; }
+.img_weix{ background-image: url(../img/img_weix.png) !important; }
+.switch_purse{ background-image: url(../img/switch_purse.png) !important; }
+.switch_commission{ background-image: url(../img/switch_commission.png) !important; }
+.switch_screening{ background-image: url(../img/switch_screening.png) !important; }
+.ic_commodity_down{ background-image: url(../img/ic_commodity_down.png) !important; }
+.ic_commodity_top{ background-image: url(../img/ic_commodity_top.png) !important; }
+.ic_close{ background-image: url(../img/ic_close.png) !important; }
+.ic_close_v1{ background-image: url(../img/ic_close_v1.png) !important; }
+.ic_delet{ background-image: url(../img/ic_delet.png) !important; }
+.ic_edit{ background-image: url(../img/ic_edit.png) !important; }
+.ic_moble{ background-image: url(../img/ic_moble.png) !important; }
+.ic_moble_v1{ background-image: url(../img/ic_moble_v1.png) !important; }
+.ic_password{ background-image: url(../img/ic_password.png) !important; }
+.ic_password_v1{ background-image: url(../img/ic_password_v1.png) !important; }
+.ic_verifi_code{ background-image: url(../img/ic_verifi_code.png) !important; }
+.ic_verifi_code_v1{ background-image: url(../img/ic_verifi_code_v1.png) !important; }
+.ic_invitation_code{ background-image: url(../img/ic_invitation_code.png) !important; }
+.ic_invitation_code_v1{ background-image: url(../img/ic_invitation_code_v1.png) !important; }
+.ic_msg{ background-image: url(../img/ic_msg.png) !important; }
+.ic_arrow_oder{background-image: url(../img/oderline.png) !important;}
+.ic_store{background-image: url(../img/ic_store.png) !important;}
+.ic_map{background-image: url(../img/ic_map.png) !important;}
+.ic_share_close{background-image: url(../img/ic_share_close_v1.png) !important;}

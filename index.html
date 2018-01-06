@@ -1,0 +1,379 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css"/>
+    <style>
+        .wrap{ height: 100%; }
+        header{ /*background-color: #ff4c00;*/background-color:black;/*background-color: #272727;*/ }
+        header ul li { height: 46px; line-height: 46px;  text-align: center; display: none; color: #fff; position: relative; font-size: 18px;  position: relative; }
+        header ul li.big-height {   }
+
+        header ul li span.btn{ display: block; width: 40px; line-height: 70px; height: 100%; position: absolute; bottom: 0; background: url() no-repeat center; background-size: 35px auto; font-size: 0.8rem;   }
+        header ul li span.btn_big{display: block; width: 40px; line-height: 70px; height: 100%; position: absolute; bottom: 0; background: url() no-repeat center; background-size: 25px auto; font-size: 0.8rem; }
+        header ul li.big-height span.btn{  background-position: center center;  }
+        header ul li span.left{ left:0; }
+        header ul li span.right{ right:0; }
+        header ul li span.text{ padding :0 10px; font-size: 0.8rem; }
+        header ul li span .notify{  display: block; width: 16px; height: 16px; line-height: 16px; font-size: 0.8rem; color: white; text-align: center; background-color: #ff0000; border-radius: 50%; position: absolute; right: 1px; bottom: 30px; }
+        header ul li img{ height: 80%; }
+        header ul li span.ic_msg em{display:block;width: 8px;height:8px;border-radius: 50%;background-color:#fff;position:absolute;top: 10px;right: 2px;}
+
+        .search{ line-height: 30px; background-color: #ff4c00; margin:0 40px;padding: 8px 5px 5px 5px; display:-webkit-box;-webkit-box-orient:horizontal;}
+        .search .ic_search{ text-align:left; font-size:0.9rem;border-radius: 6px; display: block; color: #c4c4c4; padding: 0 10px 0 40px; background: #fdeee6 url() no-repeat 10px center; background-size: 28px auto; -webkit-box-flex:1;  }
+        .search .ic_back{color:#fff;}
+        
+        .main{background-color:black;}
+
+        footer{  /*background-color: #ffffff; */background-color:black;/*border-top:1px solid #c5c9ce;*/}
+        footer ul li{  /*font-size:0.8rem;*/padding-top: 28px; padding-bottom: 1px; background: url() no-repeat center -60px; background-size: 26px auto; text-align: center; color: #c5c9ce; position: relative;}
+        /*footer ul li:hover{ color: #aac864; background-position : center 4px;  }*/
+        footer ul li.active{ color: #ff4c00; background-position : center 5px;   }
+        footer ul li span{border-radius:50px; padding:1px 5px; background-color:#ff0000;display: inline-block;color:#fff;position: absolute;top:2px;margin-left:-12px;}
+    </style>
+</head>
+<body>
+<div class="flex-wrap flex-vertical wrap">
+    <header>
+        <ul>
+            <li class=" big-height show" >
+               	 免费影片
+            </li>
+            <li class="">
+            	发现
+            	</li>
+            <li class="" >
+               	 VIP会员
+            </li>
+        </ul>
+    </header>
+    <div class="flex-con main">
+
+    </div>
+    <!--<footer style="position: fixed;width: 100%;">-->
+    <footer style="width: 100%;">
+        <ul class="flex-wrap" >
+            <li tapmode="hover" onclick="funSwitch( { el:this } );" data-name="home" class="flex-con ic_bottom_nav_home active" >免费影片</li>
+            <li tapmode="hover" onclick="funSwitch( { el:this } );" data-name="discover" class="flex-con ic_bottom_nav_luck" >发现</li>
+            <li tapmode="hover" onclick="funSwitch( { el:this } );" data-name="personal" class="flex-con ic_bottom_nav_personal" >VIP会员</li>
+        </ul>
+    </footer>
+    <div tapmode="hover" data-html="commodityDetails" data-has-loginIn="true"  class="hide hide-info" >隐藏信息</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="./js/SHA1.js"></script>
+<script type="text/javascript" src="./js/api.js"></script>
+<script type="text/javascript">
+    var allVar = {};
+    apiready = function () {
+    	if(api.systemType == 'ios'){
+    		$api.fixStatusBar( $api.dom('header') );
+    	}
+    	/*
+        api.setStatusBarStyle({
+            style: 'light',//dark
+            //color: '#fff'
+        });
+        */
+        // localStorage.clear();
+
+        if( api.frameName == 'foot-nav' ){
+            $api.addCls( $api.dom('header'), 'hide');
+            $api.addCls( $api.dom('.main'), 'hide');
+        }else{
+            var config = JSON.parse( localStorage.getItem( 'config' ) ) || {};
+            /*
+            if( ! config.hasFirstEnter ){
+                // config.eitherFirstTimeEnter = true;
+                // localStorage.setItem( 'config', JSON.stringify( config ) );
+                funIniStartPageGroup();
+            }else{
+                funIniGroup();
+                // getAmount();
+                $api.removeLocal( 'config', 'hasPopup');
+            }
+            */
+            var token = $api.getStorage('token');
+            if(!token || token == 'undefined'){
+                $api.ajax({
+                    method:'token',
+                    data:{}
+                },function(ret,err){
+                    if(ret.code == 0){
+                        $api.setStorage('token',ret.data.token);
+                        $api.setStorage('user_id',ret.data.user_id);
+                    }
+                    funIniGroup();
+                });
+            }else{
+                funIniGroup();
+            }
+            // getAmount();
+            $api.removeLocal( 'config', 'hasPopup');
+        }
+		api.addEventListener({
+			name:'keyback'
+		},function(ret,err){
+            $api.getLocal( 'config', 'hasPopup', function( ret ){
+                if( ret ){
+                    var exec = {
+                            name: ret.win,
+                            frameName: ret.frm,
+                            script: 'closeCurrent();'
+                        };
+                    api.execScript( exec );
+                }else{
+				    api.closeWidget();
+                }
+            });
+		});
+
+		//cartGetall();
+
+    }
+
+    //  Was executed by start page
+    function byStartPage(){
+        funIniGroup();
+        api.closeFrameGroup({
+            name: 'startPageGroup'
+        });
+    }
+
+    //  iniStartPageGroup Initialization
+    function funIniStartPageGroup(){
+            allVar.startFrames = [];
+        for (var i = 0,len = 3; i < len; i++) {
+                allVar.startFrames.push( {
+                    name: 'startPageGroup'+i,
+                    url: './html/startPage/index.html',
+                    bounces : false
+                } )
+        }
+
+        api.openFrameGroup({
+            name: 'startPageGroup',
+            rect: {
+                x: 0,
+                y: $api.hasCls( $api.dom('header'), 'fixStatusBar') ? 20 : 0,
+                w: api.winWidth,
+                h: api.winHeight
+            },
+            index: 0,
+            frames: allVar.startFrames
+        }, function (ret, err) {
+            //  alert( JSON.stringify( ret ) )
+        });
+    }
+
+
+	// 用户订单数   xiguo.orders.amount
+    function getAmount(){
+        $api.getLocal( 'config', 'user', function( ret ){
+            if( ret ){
+                $api.ajax({
+                    method : 'xiguo.orders.amount',
+                    cache : false,
+                    data : {
+                        member_id : ret.member_id
+                    }
+                },function( ret, err ){
+                    if( ret.code == 0 ){
+                        if( Number( ret.data.orders_count ) ){
+                            $api.dom('.big-height .ic_monny').innerHTML += '<b class="notify">'+ret.data.orders_count+'</b>';
+                        }else{
+                            $api.dom('.big-height .ic_monny').innerHTML += '';
+                        }
+                        setTimeout(function(){
+                            api.execScript({
+                                name: 'root',
+                                frameName : 'home',
+                                script: 'getAmount('+JSON.stringify( ret )+')'
+                            });
+                        },500);
+                    }
+                });
+            }
+        });
+	}
+
+    //  Group Initialization
+    function funIniGroup(){
+        var eFooterLis = $api.domAll('footer li'),
+        	headerH,
+            frames = [];
+
+        for (var i = 0,len = eFooterLis.length; i < len; i++) {
+                var name = eFooterLis[i].getAttribute('data-name');
+                frames.push( {
+                    name: name,
+                    url: './html/'+name+'/index.html',
+                    allowEdit : true
+                } )
+        }
+
+        api.openFrameGroup({
+            name: 'group',
+            scrollEnabled: false,
+            rect: {
+                x: 0,
+                y: $api.dom('header').offsetHeight,
+                w: api.winWidth,
+                h: api.winHeight - $api.dom( 'header' ).offsetHeight,
+            },
+            index: 0,
+            frames: frames
+        }, function (ret, err) {
+
+        });
+
+        api.openFrame({
+            name: 'foot-nav',
+            url: './index.html',
+            bgColor: 'rgba(0,0,0,0)',
+            rect:{
+                x:0,
+                y: api.winHeight - $api.dom( 'footer' ).offsetHeight,
+                w: api.winWidth ,
+                h: $api.dom( 'footer' ).offsetHeight
+            }
+        });
+    }
+
+
+    //  Was executed by index page
+    function changeIndexHeader( index ){
+        var  eHeaderLis = $api.domAll('header li');
+
+        for (var i = 0,len = eHeaderLis.length; i < len; i++) {
+            if( index != i ){
+                $api.removeCls(eHeaderLis[i], 'show');
+            }
+        }
+        $api.addCls( eHeaderLis[index], 'show');
+        api.setFrameGroupIndex({
+            name: 'group',
+            index: index
+        });
+
+    }
+
+    // Switch button || was executed by other pages
+    function funSwitch( obj ) {
+        obj = typeof obj == 'number' ? { el : $api.dom('footer li:nth-child('+ obj +')') } : obj;
+        $api.hasLoginIn(obj, function( obj ){
+            if( obj.el == $api.dom('footer li.active') )return;
+            var eFootLis = $api.domAll('footer li'),
+                eHeaderLis = $api.domAll('header li'),
+                index = 0;
+            for (var i = 0,len = eFootLis.length; i < len; i++) {
+                if( obj.el == eFootLis[i] ){
+                    index = i;
+                }else{
+                    $api.removeCls(eFootLis[i], 'active');
+                }
+            }
+            $api.addCls( eFootLis[index], 'active');
+            api.execScript({
+                name: 'root',
+                script: 'changeIndexHeader('+index+')'
+            });
+        })
+    }
+
+    //  Open  public header page
+    function funIntoHeader( tag ){
+        api.openWin({
+            name: tag.getAttribute('data-name'),
+            url: './html/public/headerAndFooter.html'
+        });
+    }
+
+    //  open scanner
+    function intoScanner(){
+        allVar.FNScanner = api.require('FNScanner');
+        allVar.FNScanner.openScanner({
+            autorotation: true
+        }, function(ret) {
+            if( ret.eventType == 'success'){
+                var matches = ret.content.match(/product-(\d+)\.html/);
+                var product_id = matches ? matches[1] : null;
+                if( product_id ){
+                	matches = ret.content.match(/shop_id==(\d+)/);
+                	var shop_id = matches ? matches[1] : 0;
+                	$api.setStorage('xg_shop_id',shop_id);
+                	$api.ajax({
+						method : 'xiguo.product.index',
+						data : {
+							product_id : product_id
+						}
+					},function(ret,err){
+						if( ret.code == 0 ){
+							var productInfo = ret.data.product;
+							productInfo.image_url = ret.data.page_product_basic.image[0].image_id ? ret.data.page_product_basic.image[0].image_id : '';
+							//alert($api.jsonToStr(productInfo));
+							$api.dom('.hide-info').innerHTML = '<i class="hide">'+JSON.stringify( productInfo )+'</i>';
+                    		$api.intoHeader( { el: $api.dom('.hide-info') }, true );
+						}
+					});
+                	//$api.dom('.hide-info').innerHTML = '<i class="hide">'+JSON.stringify( {product_id:product_id} )+'</i>';
+                    //$api.intoHeader( { el: $api.dom('.hide-info') }, true );
+                }else{
+                    $api.toast( '识别失败，请扫指定的二维码' );
+                }
+
+                /*
+                $api.hasLoginIn( { el : $api.dom('.hide-info')},function( ){
+                    $api.getLocal( 'config', 'user', function( ret ){
+                        if( ret ){
+                            $api.ajax({
+                                method : 'xiguo.goods.products',
+                                data : {
+                                    member_id : ret.member_id,
+                                    bn : bn
+                                }
+                            },function( ret, err ){
+                                if( ret.code == 0 ){
+                                    $api.dom('.hide-info').innerHTML += '<i class="hide">'+JSON.stringify( ret.data )+'</i>';
+                                    $api.intoHeader( { el: $api.dom('.hide-info') } );
+                                }else{
+                                    $api.toast( ret  );
+                                }
+                            });
+                        }
+                    });
+                });
+                */
+            }
+        });
+    }
+
+    //	获取购物车全部内容	xiguo.cart.getall
+    function cartGetall( obj ){
+		$api.getLocal( 'config', 'user', function( ret ){
+			if( ret ){
+				$api.ajax({
+					method : 'seller.cart.getall',
+					data : {
+						member_id : ret.member_id,
+						is_checkout : false
+					}
+				},function( ret, err ){
+					if( ret.code == 0 && ret.data.aCart.items_quantity ){
+						$api.dom('.ic_bottom_nav_shop span').innerHTML = ret.data.aCart.items_quantity;
+					}else{
+						//$api.toast( ret  );
+						$api.dom('.ic_bottom_nav_shop span').innerHTML = 0;
+						//$api.addCls($api.dom('.ic_bottom_nav_shop span'),'hide');
+					}
+				})
+			}
+		});
+	}
+
+
+</script>

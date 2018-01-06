@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+        <meta name="format-detection" content="tephone=no,email=no,date=no,address=no">
+        <style type="text/css">
+            html{ background-color: white; }
+            header{ border-bottom: 1px solid #ccc; padding: 25px 0; }
+            span {
+                padding: 10px 15px;
+                margin: 10px;
+                display: inline-block;
+                background-color: #e8e8e8;
+            }
+            .hover{ opacity: .4; }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>详情页-播放器</h1>
+            <mark>
+                这里可以是封面图
+            </mark>
+        </header>
+        <span tapmode="hover" onclick="aPlay()">打开播放</span>
+        <span tapmode="hover" onclick="fnPause()">暂停</span>
+        <span tapmode="hover" onclick="fnStart()">播放</span>
+        <span tapmode="hover" onclick="fnStop()">停止</span>
+        <p>PS：左右滑->快进/后退，上下滑->音量调节，单击播放的视频画面显示默认自带的播放控制按钮（包括全屏等）</p>
+
+    </body>
+</html>
+<script type="text/javascript">
+    var aplayer;
+    apiready = function() {
+        aplayer = api.require('aplayer');
+        aplayer.init({
+            fullBtnPlan : 1,
+            isImmerse : false
+        });
+    };
+    function aPlay(){
+        aplayer.play({
+            rect:
+            {    x: 0,
+                y : 0,
+                //w : 320,
+                h: 150
+            },
+            fixedOn: api.frameName,
+            title: 'test',
+            url: 'http://resource.apicloud.com/video/apicloud3.mp4',
+            defaultBtn: true,
+            enableFull : false,
+             isTopView : false
+        }, function(ret, err) {
+            timer();
+        });
+    }
+    
+    function timer(){
+        setInterval(function(){
+            aplayer.getCurrentPosition(function(ret, err) {
+                if(ret.status){
+                    console.log(ret.currentPosition);
+                    if(ret.currentPosition/1000 >= 30){
+                        fnStop();
+                        alert('已播放30秒');
+                    }
+                }
+            });
+        },1000);
+    }
+    
+    function fnStart(){
+        aplayer.start(function(ret, err) {
+        });
+    }
+    function fnPause(){
+        aplayer.pause(function(ret, err) {
+        });
+    }
+    function fnStop(){
+        aplayer.stop(function(ret, err) {
+        });
+    }
+    function fnClose(){
+        aplayer.stop(function(ret, err) {
+        });
+    }
+    
+    function fnFullScreen(){
+        aplayer.full(function(ret, err) {
+            
+        });
+    }
+    function fnCancelFullScreen(){
+        aplayer.unfull(function(ret, err) {
+            
+        });
+    }
+    
+    function fnAddEventListener(){
+        videoPlayer.addEventListener({
+            name:'leftUp'
+        }, function(ret, err){        
+            if( ret ){
+                alert( JSON.stringify( ret ) );
+            }else{
+                alert( JSON.stringify( err ) );
+            }
+        });
+    }
+    
+
+</script>

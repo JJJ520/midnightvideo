@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no"/>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<style>
+			body{background-color:#fff; }
+			body{background-color:black;}
+			::-webkit-scrollbar {width: 0; height: 0; font-size:0;background-color: #fff;} 
+			::-webkit-scrollbar-track {background-color: #fff;}   
+			::-webkit-scrollbar-thumb {background-color: #fff; } 
+    	
+			.banner{}
+	        .banner img{ width: 100%; } 
+	        .discription{ line-height: 18px; font-size: 0.9rem; color: #888; padding: 10px; }
+	        
+	        ol{background-color:black !important;color:white;}
+	        ol li{background-color:black !important;color:white;}
+	        
+	        .floor-list{padding-bottom:52px;margin-top:5px;}
+			ul li {font-size: 0.9rem;/*padding: 0 6px;*/}
+			ul li img {width: 100%;vertical-align: middle;}
+			ul li .title {color: #333;color:white;text-align:center;line-height: 18px;padding: 10px 0 0;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;/*overflow: hidden;text-overflow:ellipsis;white-space: nowrap;*/}
+			ul li .img_commodity {background: white url() no-repeat center;background-size: 100% auto;height: 120px;position: relative;}
+			ul li .img_commodity span {background-color: #ff5e19;color: white;border-radius: 4px;padding: 1px 3px;position: absolute;left: 2px;top: 2px;line-height: 20px;font-size: 1.2rem;}
+			ul li .commodity-info {line-height: 18px;padding-top: 6px;}
+			ul li .commodity-info .number {color: #ff1929;}
+			ul li .commodity-info .monny {color: #cccccc;text-align: right;}
+			
+			.date{ padding: 10px; text-align: right; line-height: 22px; font-size: 0.9rem; }
+	        .date span{  display:inline-block;  }
+	        .date span code{ border-radius: 4px; background-color: #ff3434; color: white; padding: 2px 4px; margin: 0 4px; }
+
+			/*瀑布流样式*/
+			.aui-waterfall{ width: 100%; position:relative;} 
+			.aui-waterfall li{ width:49%; position: relative; display: inline-block; /*margin-bottom: 10px;*/ /*-webkit-column-break-inside:avoid;padding-bottom:7px;*/}
+			.aui-waterfall-bak li:after {display: block;content: '';position: absolute;top: 0;right: 0;bottom: 0;left: 0;-webkit-transform-origin: 0 0;-webkit-transform: scale(1);pointer-events: none/*;border: 1px solid #efefef;*/}
+			.aui-ellipsis-2-bak {display: -webkit-box;overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;white-space: normal !important;-webkit-line-clamp: 2;-webkit-box-orient: vertical;}
+			
+			#category-head{background-color: #fff;width:100%;display: inline;white-space: nowrap;overflow-x:scroll;float:left;overflow-y:hidden;position: fixed;top:0; left: 0; right:0;z-index: 2;}
+			#category-head li{display:inline-block;line-height: 42px; padding: 0 10px;font-size:1.1rem;}
+			#category-head li.active{/*color: #FF74C3;*/color:red; }
+		</style>
+	</head>
+	<body>
+    	<ol class="flex-layout category-head" id="category-head">
+    	       <!--
+		       <li class="flex active" tapmode="hover" onclick="funSwitch( { el : this });">分类1</li>
+		       <li class="flex" tapmode="hover" onclick="funSwitch( { el : this });">分类2</li>
+		       <li class="flex" tapmode="hover" onclick="funSwitch( { el : this });">分类3</li>
+		       <li class="flex" tapmode="hover" onclick="funSwitch( { el : this });">分类4</li>
+		       <li class="flex"  tapmode="hover" onclick="funSwitch( { el : this });">分类5</li>
+		       <li class="flex" tapmode="hover" onclick="funSwitch( { el : this });">分类6</li>
+		       <li class="flex" tapmode="hover" onclick="funSwitch( { el : this });">分类7</li>
+		       <li class="flex"  tapmode="hover" onclick="funSwitch( { el : this });">分类8</li>
+		       -->
+		</ol>
+        <div class="discription">
+            <p>&nbsp;</p>
+        </div>
+         <div class="floor-list">
+        	<ul  class="aui-waterfall" id="aui-waterfall">
+        	</ul>
+        </div>
+
+	</body>
+</html>
+<script type="text/javascript" src="../../js/api.js"></script>
+<script type="text/javascript" src="../../js/aui-waterfall.js"></script>
+<script type="text/javascript">
+	var allVar = {};
+	allVar.pg = 1;
+	allVar.cid = 3;
+	apiready = function() {
+		api.setRefreshHeaderInfo({
+			bgColor : '#ccc',
+			textColor : '#fff',
+		}, function(ret, err) {
+		    allVar.pg = 1;
+			getVideoList();
+			api.refreshHeaderLoadDone();
+            api.hideProgress();
+		});
+		allVar.imgh = api.winWidth*2/3;
+		//getVideoList();
+		getCategory();
+		api.addEventListener({
+            name:'scrolltobottom',
+            extra:{
+                threshold:60 
+            }
+        },function(ret,err){
+            getVideoList();
+        });
+	}
+	
+	function funSwitch( obj ) {
+        allVar.index = $api.thisActive( obj );
+        allVar.cid = obj.cid;
+        allVar.pg = 1;
+        getVideoList();
+    }
+    
+    function getCategory(){
+        $api.ajax({
+            method : 'player.category.index',
+            data : {
+                cid : allVar.cid,
+                pg : allVar.pg
+            }
+        },function( ret, err ){
+            if( ret.code == 0 ){
+                var ht = '';
+                for(var i in ret.data){
+                    if(ret.data[i].cid == 3){
+                        var cates = ret.data[i].children;
+                        for(var j in cates){
+                            if(j == 0){
+                                allVar.cid = cates[j].cid;
+                                ht += '<li class="flex active" tapmode="hover" onclick="funSwitch( { el : this,cid: '+cates[j].cid+'});">'+cates[j].name+'</li>';
+                            }else{
+                                ht += '<li class="flex" tapmode="hover" onclick="funSwitch( { el : this ,cid: '+cates[j].cid+'});">'+cates[j].name+'</li>';
+                            }
+                        }
+                    }
+                }
+                $api.dom('#category-head').innerHTML = ht;
+                api.parseTapmode();
+                getVideoList();
+            }
+        });
+    }
+	
+    function getVideoList( way ){
+        if(allVar.pg == 0){
+           return false;
+        }
+        $api.ajax({
+            method : 'player.video.index',
+            data : {
+                cid : allVar.cid,
+                pg : allVar.pg
+            }
+        },function( ret, err ){
+            if( ret.code == 0 ){
+                var ht = '';
+                var products = null;
+                var index = 0;
+                for( var x in ret.data ){
+                        	ht +=   '<li style="'+(index == 0 ? 'border-right: solid 1px black;' : '')+'" class="id_'+ret.data[x].id+'" tapmode="hover" onclick="$api.intoHeader( { el: this } );" data-html="commodityDetails">'+
+                        			'	<i class="hide" >'+JSON.stringify( ret.data[x] )+'</i>'+
+									'	<div class="content">'+
+									//'		<div class="img_commodity" style="background-image:url('+ret.data[x].img.url+');" ><i class="hide" >'+JSON.stringify( ret.data[x] )+'</i><span class="hide">￥169.00</span></div>'+
+									'      <div class="img_commodity22" style="" ><img src="'+(ret.data[x].thumb?ret.data[x].thumb.url:ret.data[x].img.url)+'" style="height:'+allVar.imgh+'px;"/><i class="hide" >'+JSON.stringify( ret.data[x] )+'</i></div>'+
+									'		<div class="title row-nowrap">'+ret.data[x].name+'</div>'+
+									'	</div>'+
+									'</li>';
+                        
+                }
+                if( allVar.pg == 1 ){
+                    if(!ht){
+                        ht = '<div style="text-align:center;">没有更多数据了</div>';
+                    }
+                    $api.dom('.aui-waterfall').innerHTML = ht;
+                }else{
+                    $api.append( $api.dom('.aui-waterfall'), ht);
+                }
+                allVar.pg += 1;
+                //$api[ way || 'append' ]( $api.dom('.aui-waterfall'), ht);
+                //$api.dom('.aui-waterfall').innerHTML = ht;
+                //getGoods();
+                api.parseTapmode();
+            }else{
+                if(allVar.pg == 1){
+                    $api.dom('.aui-waterfall').innerHTML = '';
+                }
+                allVar.pg = 0;
+            }
+            api.refreshHeaderLoadDone();
+            api.hideProgress();
+        });
+    }
+    
+	function getGoods(){
+    	//todo api
+    	$aui.waterfall($api.byId("aui-waterfall"),{
+		    col:2,//列数
+		    padding:0.1,//容器内边距
+		    space:0.1//列间距
+		});
+    }
+</script>

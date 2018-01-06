@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <style>
+        .wrap{ height: 100%; }
+        header{/*background-color: #ff4c00;*//*background-color:#272727;*/background-color:black; line-height: 42px; text-align: center; display: none; color: #fff; position: relative;font-size: 18px;  position: relative; min-height: 42px; border-bottom: 1px solid #272727; }
+        header span.btn{ display: block; width: 42px; height: 42px; position: absolute; bottom: 0; background: url() no-repeat center; background-size: 40px auto;  }
+        header span.btnID{ display: block; width: 80px; height: 16px;line-height:16px; position: absolute; bottom: 0;}
+        header span.left{ left:0;margin-top:20px; }
+        header span.right{ right:0;}
+        header span.btn.text{ width: 60px; font-size: 0.9rem; }
+        header span.btnID.text{ font-size: 0.625rem; }
+        header .search-wrap{ padding: 6px 50px 0 40px; }
+        header .search{margin-bottom:5px; border: 1px solid #cedab2; border-radius: 4px; line-height: 26px; font-size:1rem; color: #afc767; background:white url() no-repeat 5px center; background-size: 26px auto;  padding: 0 10px 3px 34px;}
+        header .search input{ width: 100%; color: #c4c4c4; border: 0; background-color: transparent; outline: none; }
+        .ios10{background-color: #ff4c00;}
+    </style>
+</head>
+<body>
+<div class="flex-wrap flex-vertical wrap" style="background-color: #ff4c00;">
+    <p class="ios10 hide">&nbsp;</p>
+
+    <header class="childrenMeetingplace" data-fraPath="../home/childrenMeetingplace" >
+        <span tapmode="hover" onclick="api.closeWin();" class="btn left ic_arrow_left"></span>
+        <span tapmode="hover" onclick="$api.popup( { el: this } );" data-name="share"data-has-loginIn="true" class="btn right text">分享</span>
+        <p>童装会场</p>
+    </header>
+    <header class="limittimebuyDetails" data-fraPath="../home/limittimebuyDetails" >
+        <span tapmode="hover" onclick="api.closeWin();" class="btn left ic_arrow_left"></span>
+        <span tapmode="hover" onclick="$api.popup( { el: this } );" data-name="share" data-has-loginIn="true" class="btn right text hide">分享</span>
+        <p>闪购</p>
+    </header>
+    
+    <header class="commodityDetails" data-fraPath="../home/commodityDetails" >
+        <span tapmode="hover" onclick="api.closeWin();" class="btn left ic_arrow_left"></span>
+        	视频详情
+    </header>
+    
+    
+    <header class="commodityType" data-fraPath="../shop/commodityType" >
+        <span tapmode="hover" onclick="api.closeWin();" class="btn left ic_arrow_left"></span>
+        	视频详情
+    </header>
+    
+
+    <div class="flex-con main">
+
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../../js/api.js"></script>
+<script type="text/javascript">
+    var allVar = {};
+    apiready = function(){
+        allVar.elHeader = $api.dom( 'header.'+api.winName ),
+        allVar.elFooter = $api.dom('footer.'+api.winName);
+		if( allVar.elHeader && api.winName != 'search' && api.winName != 'signIn' && api.winName != 'signUp' && api.winName != 'signIn2' ){
+			$api.addCls( allVar.elHeader, 'show' );
+		}
+//		if( allVar.elHeader && api.winName != 'search' && api.winName != 'signIn' && api.winName != 'signUp' ){
+//			$api.addCls( allVar.elHeader, 'show' );
+//		}
+		if( allVar.elFooter ){
+			$api.addCls( allVar.elFooter, 'show' );
+		}
+		
+		//$api.fixStatusBar( allVar.elHeader ); 
+		var ios10Height = 0; 	
+		if( api.systemType == 'ios' ){
+			//$api.fixStatusBar( allVar.elHeader ); 
+			//$api.css(allVar.elHeader,'padding-top:20px');
+			var systemVersion = parseInt(api.systemVersion);
+			if(systemVersion == 10 && api.winName != 'signIn' && api.winName != 'signUp' && api.winName != 'signIn2'){
+			     $api.removeCls($api.dom('.ios10'), 'hide');
+			     ios10Height = 20;//$api.dom( 'header.'+api.winName ).offsetHeight;
+			}else{
+			     $api.fixStatusBar( allVar.elHeader );
+			}
+		}
+		
+        var path = allVar.elHeader.getAttribute('data-fraPath');
+        if( path == 'imageClip' ){
+            cuttingHead( JSON.parse( api.pageParam.param ) );
+        }else{
+            api.openFrame({
+                name: api.winName,
+                url: path+'.html',
+                rect:{
+                    x:0,
+                    y: $api.dom( 'header.'+api.winName ).offsetHeight+ios10Height,
+                    w: api.winWidth ,
+                    h: $api.dom( '.main' ).offsetHeight-(ios10Height?$api.dom( 'header.'+api.winName ).offsetHeight+20:0),//api.winHeight-header高度-footer高度
+                },
+                showProgress : true,
+                allowEdit : true,
+                pageParam : {
+                    param : api.pageParam.param ? (function( ret ){
+                        ret = JSON.parse( api.pageParam.param );
+                        switch ( api.winName ){
+                            case 'childrenMeetingplace' : 
+                                $api.dom( 'header.'+api.winName+' p' ).innerHTML = ret.title;
+                                allVar.share = {
+                                    id : ret.id,
+                                    title : ret.title,
+                                    thumb : ret.index_image
+                                };
+                            	break;
+                            case 'limittimebuyDetails' : 
+                                $api.dom( 'header.'+api.winName+' p' ).innerHTML = ret.name;
+                                allVar.share = {
+                                    id : ret.rule_id,
+                                    title : ret.name,
+                                    thumb : (ret.images.index_banner?ret.images.index_banner:ret.images.special)
+                                };
+                            	break;
+                            case 'commodityDetails' : 
+                                allVar.share = {
+                                	scene : 'commodityDetails',
+                                    id : ret.product_id,
+                                    title : ret.name,
+                                    thumb : (ret.image_url?ret.image_url:ret.image_default_id)
+                                }
+                            	break;
+                           	 default:
+                           	 	
+                        }
+                    		return JSON.stringify( ret ); 
+                    })() : false
+                }
+            });
+        }
+        
+        
+        
+		api.addEventListener({
+			name:'keyback'
+		},function(ret,err){
+		    api.setScreenOrientation({
+                orientation: 'auto'
+            });
+            backProcessing();
+		});
+	}
+    
+    
+    //  Cutting head
+    function cuttingHead( obj ){
+        allVar.imageClip = api.require('imageClip');
+        allVar.imageClip.open({
+            path : obj.path,
+            y :  $api.dom( 'header.'+api.winName ).offsetHeight,
+            h : api.winHeight - $api.dom( 'header.'+api.winName ).offsetHeight,
+            bg : '#ffffff',
+            borderColor : '#afc767',
+            clipRect:{
+                x : 10,
+                y : ( ( api.winHeight - $api.dom( 'header.'+api.winName ).offsetHeight ) - api.winWidth) /2 ,
+                w : api.winWidth - 20 ,
+                h : api.winWidth,
+                fixation:true
+            }
+        });
+    }
+    
+    //  Cutting head complete
+    function cuttingHeadComplete(){
+        allVar.imageClip.save({
+            savePath: api.fsDir,
+        },function(ret, err){
+            if(ret){
+                var exec = {
+                    name: 'managerInfo',
+                    frameName: 'managerInfo',
+                    script: 'submitAvatar({ path : "'+ret.savePath+'"});'
+                };
+                api.execScript( exec );
+                api.closeWin();
+            }else{
+                alert( JSON.stringify( err ))
+            }
+        });
+    }
+    
+    //  Back processing
+    function backProcessing(){
+        $api.getLocal( 'config', 'hasPopup', function( ret ){
+            if( ret ){
+                if( 'closeToWin' == ret.win ){
+                    $api.removeLocal( 'config', 'hasPopup',function( ret ){
+                        api.closeToWin({
+                            name: 'root'
+                        });
+                    });
+                }else if( api.winName == ret.win ){
+                    var exec = {
+                            name: ret.win,
+                            frameName: ret.frm,
+                            script: 'closeCurrent();'
+                        };
+                    api.execScript( exec );
+                }else{
+                    api.closeWin();
+                }
+            }else{
+                api.closeWin();
+            }
+        });
+    }
+    
+    
+    //  提交商铺设置信息
+    function completeShopSetting(){
+        var exec = {
+                name: 'shopSetting',
+                frameName: 'shopSetting',
+                script: 'updateDis();'
+            };
+        api.execScript( exec );
+    }
+    
+    //  Open  public header page
+    function funIntoHeader( tag ){
+        api.openWin({
+            name: tag.getAttribute('data-name'),
+            url: '../public/headerAndFooter.html'
+        });
+    }
+    
+    
+    //  Execute commodityDetails.html page code
+    function funExecutedCommodityDetails(){
+        api.execScript({
+            name: api.winName,
+            frameName: 'commodityDetails',
+            script: 'funShowHeadBtn()'
+        });
+    }
+    
+    
+    //  Start searching
+    function startSearch( obj ){
+        var keywords = $api.dom('#startSearch');
+        if( keywords.value.trim() ){
+            api.execScript({
+                name: api.winName,
+                frameName: api.winName,
+                script: 'initiailzation({ keywords : "'+keywords.value+'" })'
+            });
+        }
+    }
+</script>

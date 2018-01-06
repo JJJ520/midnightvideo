@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no"/>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<style>
+			body{background-color:#fff; }
+			body{background-color:black;}
+			.banner{}
+	        .banner img{ width: 100%; } 
+	        .discription{ line-height: 18px; font-size: 0.9rem; color: #888; /*padding: 10px;*/ }
+	        
+	        .floor-list{padding-bottom:52px;/*padding-bottom:52px;margin-top:2px;*/}
+			ul li {font-size: 0.9rem;/*padding: 0 6px;*/}
+			ul li img {width: 100%;vertical-align: middle;}
+			ul li .title {color: #333;color:white;text-align:center;line-height: 18px;/*font-size: 1.1rem;*/padding: 10px 0 0;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;/*overflow: hidden;text-overflow:ellipsis;white-space: nowrap;*/}
+			ul li .img_commodity {background: white url() no-repeat center;background-size: 100% auto;height: 120px;position: relative;}
+			ul li .img_commodity span {background-color: #ff5e19;color: white;border-radius: 4px;padding: 1px 3px;position: absolute;left: 2px;top: 2px;line-height: 20px;font-size: 1.2rem;}
+			ul li .commodity-info {line-height: 18px;padding-top: 6px;}
+			ul li .commodity-info .number {color: #ff1929;}
+			ul li .commodity-info .monny {color: #cccccc;text-align: right;}
+			
+			.date{ padding: 10px; text-align: right; line-height: 22px; font-size: 0.9rem; }
+	        .date span{  display:inline-block;  }
+	        .date span code{ border-radius: 4px; background-color: #ff3434; color: white; padding: 2px 4px; margin: 0 4px; }
+
+			/*瀑布流样式*/
+			.aui-waterfall{ width: 100%; position:relative;} 
+			.aui-waterfall li{ width:49%; position: relative; display: inline-block;/*border-top:solid 3px red;*//* margin-bottom: 10px;*/ /*-webkit-column-break-inside:avoid;*//*padding-bottom:7px;*/}
+			.aui-waterfall li:after {/*display: block;content: '';position: absolute;top: 0;right: 0;bottom: 0;left: 0;-webkit-transform-origin: 0 0;-webkit-transform: scale(1);pointer-events: none;*//*border: 1px solid #efefef;*/}
+			.aui-ellipsis-2 {/*display: -webkit-box;overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;white-space: normal !important;-webkit-line-clamp: 2;-webkit-box-orient: vertical;*/}
+		</style>
+	</head>
+	<body>
+        <div class="discription">
+            <!--<p style="text-align: center;font-weight: bold;">当前片库约8975部</p>-->
+        </div>
+         <div class="floor-list">
+        	<ul  class="aui-waterfall" id="aui-waterfall">
+        		
+        		<!--
+        		<li style="border-right: solid 1px black;" class="" tapmode="hover" onclick="$api.intoHeader( { el: this } );" data-html="commodityDetails">
+					<div class="content">
+						<div class="img_commodity222" ><img src="http://padmin.ye-life.com/public/images/3c/3d/9e/bfe218ab869b4c126b5fb51f0d1c365b.jpg" style="height:120px;"/></div>
+						<div class="title row-nowrap">美素佳儿（Friso）金装儿配方 幼儿配方美素佳儿儿配奶粉</div>
+					</div>
+				</li>
+				<li class="" tapmode="hover" onclick="$api.intoHeader( { el: this } );" data-html="commodityDetails">
+                    <div class="content">
+                        <div class="img_commodity222" ><img src="http://padmin.ye-life.com/public/images/ac/43/3d/ebd784c456c640cd6ed2d98327516614.jpg" style="height:120px;"/></div>
+                        <div class="title row-nowrap">美素佳儿（Friso）金装儿配方 幼儿配方美素佳儿儿配奶粉</div>
+                    </div>
+                </li>
+                -->
+				
+        	</ul>
+        </div>
+
+	</body>
+</html>
+<script type="text/javascript" src="../../js/api.js"></script>
+<script type="text/javascript" src="../../js/aui-waterfall.js"></script>
+<script type="text/javascript">
+	var allVar = {};
+	allVar.pg = 1;
+	apiready = function() {
+		api.setRefreshHeaderInfo({
+			bgColor : '#ccc',
+			textColor : '#fff',
+		}, function(ret, err) {
+		    allVar.pg = 1;
+			getVideoList( 'prepend' );
+		});
+		allVar.imgh = api.winWidth*2/3;
+		getVideoList();
+		api.addEventListener({
+            name:'scrolltobottom',
+            extra:{
+                threshold:60 
+            }
+        },function(ret,err){
+            getVideoList();
+        });
+	}
+	
+    function getVideoList( way ){
+        if(allVar.pg == 0){
+           return false;
+        }
+        $api.ajax({
+            method : 'player.video.index',
+            data : {
+                cid : 2,
+                pg: allVar.pg
+            }
+        },function( ret, err ){
+            if( ret.code == 0 && ret.data.length){
+                
+                var ht = '';
+                var products = null;
+                var index = 0;
+                for( var x in ret.data ){
+                            index = x % 2;
+                        	ht +=   '<li style="'+(index == 0 ? 'border-right: solid 1px black;' : '')+'" class="id_'+ret.data[x].id+'" tapmode="hover" onclick="$api.intoHeader( { el: this } );" data-html="commodityDetails">'+
+                        			'	<i class="hide" >'+JSON.stringify( ret.data[x] )+'</i>'+
+									'	<div class="content">'+
+									//'		<div class="img_commodity" style="background-image:url('+ret.data[x].img.url+');" ><i class="hide" >'+JSON.stringify( ret.data[x] )+'</i><span class="hide">￥169.00</span></div>'+
+									'      <div class="img_commodity22" style="" ><img src="'+(ret.data[x].thumb?ret.data[x].thumb.url:ret.data[x].img.url)+'" style="height:'+allVar.imgh+'px;"/><i class="hide" >'+JSON.stringify( ret.data[x] )+'</i></div>'+
+									'		<div class="title row-nowrap">'+ret.data[x].name+'</div>'+
+									//'		<div class="flex-wrap commodity-info">'+
+									//'			<div class="flex-con number">￥'+ret.data.list[x].price+'</div>'+
+									//'			<del class="flex-con monny">￥'+ret.data.list[x].mktprice+'</del>'+
+									//'		</div>'+
+									'	</div>'+
+									'</li>';
+                        
+                }
+                
+                if(allVar.pg == 1){
+                    $api.dom('.aui-waterfall').innerHTML = ht;
+                }else{
+                    $api.append($api.dom('.aui-waterfall'), ht);
+                }
+                
+                allVar.pg += 1;
+                //$api[ way || 'append' ]( $api.dom('.aui-waterfall'), ht);
+                //$api.dom('.aui-waterfall').innerHTML = ht;
+                //getGoods();
+                api.parseTapmode();
+            }else{
+                 allVar.pg = 0;
+            }
+            api.refreshHeaderLoadDone();
+            api.hideProgress();
+        });
+    }
+    
+	function getGoods(){
+    	//todo api
+    	$aui.waterfall($api.byId("aui-waterfall"),{
+		    col:2,//列数
+		    padding:0.1,//容器内边距
+		    space:0.1//列间距
+		});
+    }
+</script>

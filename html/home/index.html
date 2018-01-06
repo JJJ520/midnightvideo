@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no"/>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<style>
+			::-webkit-scrollbar { width: 0;height:0;font-size:0; background-color:#fff;  }
+			::-webkit-scrollbar-track { background-color:#fff; }
+			::-webkit-scrollbar-thumb { background-color: #fff; }
+			
+			body{background-color:black;}
+			
+			.swipe {overflow: hidden; position: relative;}
+	        .swipe-wrap {overflow: hidden; position: relative;}
+	        .app_nav{-webkit-box-orient:horizontal;-webkit-box-pack:justify;text-align: center;padding: 10px 10px 0; margin:10px 0; background-color:#fff;}
+	        .app_nav .app_nav_img{width:50px;height:50px; background-color:#fff; background-size:100% auto; background-position:center; border-radius:50%; display:block; margin:0 auto;}
+	        .app_nav h3{color:#272727;font-size:0.9rem; line-height:32px;}
+	        
+	        .limit-buy{background-color:#fff; padding-bottom:5px; }
+	        .limit-buy h3{font-size:0.9rem;height:40px;line-height: 40px;}
+	        .limit-buy h3 i{ display:inline-block; vertical-align:middle; margin-right:5px; width: 0;height: 0; border-top: 12px solid transparent;border-left: 12px solid red;border-bottom: 12px solid transparent;}
+			.limit-buy h3 span{display:inline-block;vertical-align: middle;}
+			.left{float:left;}
+			.right{float:right;}
+			.limit-buy h3 span.red{color:#f00;font-size:1rem;}
+			.limit-buy h3 span.black{color:#333;margin-top:2px;}
+			.limit-buy h3 span.right{margin-top:2px;}
+			
+			.content-recommend{overflow: hidden;padding-bottom: 10px;}
+			.recommend{width: 42%;float: left;font-size: 0.9rem;line-height: 26px;margin:0 4%; position:relative;}
+			.recommend h3{margin-left:-9.8%;}
+			.recommend h3 i{ display:inline-block; vertical-align:middle; margin-right:5px; width: 0;height: 0; border-top: 12px solid transparent;border-left: 12px solid #a660a3;border-bottom: 12px solid transparent;}
+			.recommend h3 span{display:inline-block;vertical-align: middle;color:#a660a3;font-size:1rem;}
+			.recommend .img_commodity{background: white url() no-repeat center;background-size: 96% auto; }
+			.recommend .img_commodity img{width:100%;}
+			.recommend .line{height:80%;width:1px;font-size:0;background-color:#e5e5e5;position:absolute; right:-10%;bottom:0;}
+			.recommend:nth-child(2) h3 span{color:#ee87b4;}
+			.recommend:nth-child(2) h3 i{border-left: 12px solid #ee87b4;}
+			
+			.classify,.specialty{/*margin:10px 0 0;*/background-color:#fff;overflow: hidden;}
+			.classify h3,.specialty h3{width:100%;position:relative; height:42px; border-bottom: 1px solid #999; margin:10px 0 10px 0;}
+			.specialty h3{ margin:0 0 22px 0; height: 35px;}
+			.classify h3 span,.specialty h3 span{display:block; background: white url() no-repeat center;background-size: 100% auto; position:absolute; left:50%; bottom:-10px;  z-index: 99;}
+			.classify h3 span{width:95px;height:38px;margin-left:-47.5px;}
+			.specialty h3 span{width:130px;height:42px;margin-left:-65px;bottom:-18px;}
+			.classify-cont{padding:10px 10px 5px;overflow:hidden;}
+			.classify-list{overflow:hidden; padding: 0 10px 10px;}
+			.classify-cont .img_commodity{width:48.5%;float:left;}
+			.classify-cont img,.classify-list img,.specialty img{width:100%;}
+			.classify-cont .img_commodity:first-child{margin-right:1.5%;}
+			.classify-cont .img_commodity:last-child{margin-left:1.5%;}
+			.classify-list .img_commodity{width:32.333333333%;margin-right:1.46666666666%;float: left;}
+			.classify-list .img_commodity:last-child{margin-right:0;}
+			.specialty{padding-bottom: 60px;background-color:black;}
+			.specialty .img_commodity{ /*margin-top:10px;*/}
+			.specialty .specialty-c{ /*padding:0 10px;*/ }
+			.specialty-msg{/*padding:10px 0;*/border-bottom: 1px solid #272727;}
+			.specialty-msg span{ display:inline-block;vertical-align: middle;font-size: 0.9rem;}
+			.specialty-title .title-logo{ width:50px; height: 30px;background: #fff url() no-repeat center;background-size: 96% auto;}
+			.specialty-title .title-t{color:#404040;color:white;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;}
+			.specialty-title .specialty-btn{padding:2px 5px; background-color:#ff4c00;color:#fff; border-radius: 5px; margin-top:5px;}
+			.specialty-msg .specialty-btn{padding:2px 5px; background-color:#ff4c00;color:#fff; border-radius: 5px; margin-top:5px;}
+			.specialty-msg .lock_black{margin-top:8px;color:#999999}
+			
+			.wrapper{padding:10px 10px 0;}
+			.swiper-container{margin:0 auto;position:relative;overflow:hidden;z-index:1}
+	    	.swiper-wrapper{position:relative;width:100%;height:100%;z-index:1;display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;-webkit-transition-property:-webkit-transform;-moz-transition-property:-moz-transform;-o-transition-property:-o-transform;-ms-transition-property:-ms-transform;transition-property:transform;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}
+			.swiper-slide{-webkit-flex-shrink:0;-ms-flex:0 0 auto;flex-shrink:0;width:100%;height:100%;position:relative;}
+			.swiper-slide .line{position:absolute;width:1px; font-size:0; background-color:#e5e5e5; right:-10px; z-index: 3; top:0; bottom:45px;}
+			.swiper-slide:last-child .line{background-color:#fff;}
+			.wrapper ol li{text-align:center;}
+			.wrapper ol li .number{padding-top:5px; font-size:1rem;color:#f00;line-height: 1rem;}
+			.wrapper ol li .money{color:#cacaca;font-size:0.8rem;line-height: 0.8rem;}
+			.wrapper ol li .title{font-size:0.9rem;color:#999;padding-top:5px;line-height: 0.9rem;}
+			.position-relative{position:relative;}
+			.width-100-percent{width:100%;}
+			.box-sizing-border-box{ box-sizing: border-box; -webkit-box-sizing: border-box; }
+			.display-block{display:block;}
+		</style>
+	</head>
+	<body>
+    	<!--列表-->
+    	<div class="specialty" id="limit-lists">
+    	   
+    	   <!--
+    	   <div class="specialty-c" style="position: relative;">
+               <div class="img_commodity" tapmode="hover" onclick="$api.intoHeader( { el: this } );" data-html="commodityDetails" ><i class="hide">xxx</i>
+                   <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502217728322&di=7e553aad02e7224e81b1927c28d9ea58&imgtype=jpg&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F29381f30e924b8994121662564061d950a7bf68a.jpg" alt="" />
+               </div>
+               <div class="specialty-msg clearfix" style="position: absolute;bottom: 0;left: 0;width:100%;">
+                   <div class="specialty-title left">
+                       <span class="title-t">测试文字</span>
+                   </div>
+               </div>
+            </div>
+            -->
+            
+    	</div>
+    	
+		<ul class="clearfix">
+			
+		</ul>
+	</body>
+</html>
+<script type="text/javascript" src="../../js/api.js"></script>
+<script type="text/javascript" src="../../js/echo.min.js"></script>
+<script type="text/javascript" src="../../js/swiper.min.js"></script>
+<script type="text/javascript">
+	var allVar = {};
+	allVar.pg = 1;
+	apiready = function() {
+		api.setRefreshHeaderInfo({
+            bgColor: '#ccc',
+            textColor: '#fff',
+        }, function(ret, err){
+            allVar.pg = 1;
+	        getVideoList();
+	        //setTimeout('api.refreshHeaderLoadDone();',3000);
+        });
+        api.addEventListener({
+            name:'scrolltobottom',
+            extra:{
+                threshold:60 
+            }
+        },function(ret,err){
+            getVideoList();
+        });
+        
+        /*
+        var signature = api.require('signature');
+        var value = signature.aesSync({
+            data: 'test',
+            key: 'six.video.bb'
+        });
+        console.log(value);
+        */
+        
+        var uuid = $api.getStorage('uuid');
+        if(!uuid){
+        	uuid = $api.uuid();
+        	$api.setStorage('uuid',uuid);
+        }
+        var channel = api.loadSecureValue({
+            sync: true,
+            key: 'channel'
+        });
+        //device_code#channel#system#systemversion#appname#appversion#uuid
+        var device_str = api.deviceId+'#'+channel+'#'+api.systemType+'#'+api.systemVersion+'#'+api.appName+'#'+api.appVersion+'#'+uuid;
+        $api.ajax({
+            method : 'player.DeviceInfo.init',
+            data : {
+               device: device_str
+            }
+        }, function(ret, err) {
+            
+        });
+        $api.ajax({
+            method : 'player.DeviceInfo.getDeviceInfo',
+            data : {
+                
+            }
+        },function( ret, err ){
+            //console.log(JSON.stringify(ret));
+            if(ret.code == 0 && ret.data.pay){
+                $api.setStorage('uuid_product_id',ret.data.pay.product_id);
+            }
+        });
+        /*
+        var db = api.require('db');
+		db.openDatabase({
+		    name: 'player'
+		}, function(ret, err) {
+		    if (ret.status) {
+		        console.log(JSON.stringify(ret));
+		        //var uuid = $api.uuid();
+		        db.executeSql({
+			    	name: 'player',
+				    sql: 'CREATE TABLE Persons(uuid varchar(200))'
+				}, function(ret, err) {
+				    if (ret.status) {
+				        console.log(JSON.stringify(ret));
+				    } else {
+				        console.log(JSON.stringify(err));
+				    }
+				});
+				db.executeSql({
+			    	name: 'player',
+				    sql: "INSERT INTO Persons(uuid) VALUES('"+uuid+"')"
+				}, function(ret, err) {
+				    if (ret.status) {
+				        console.log(JSON.stringify(ret));
+				    } else {
+				        console.log(JSON.stringify(err));
+				    }
+				});
+				
+		        db.selectSql({
+				    name: 'player',
+				    sql: 'SELECT * FROM Persons'
+				}, function(ret, err) {
+				    if (ret.status) {
+				        console.log(JSON.stringify(ret));
+				    } else {
+				        console.log(JSON.stringify(err));
+				    }
+				});
+		    } else {
+		        console.log(JSON.stringify(err));
+		    }
+		});
+		*/
+		
+		//console.log($api.uuid());
+		//console.log($api.guid());
+        
+        getVideoList();
+        
+        setTimeout(function(){
+        	api.removeLaunchView({
+			    animation: {
+			        type: 'fade',
+			        duration: 500
+			    }
+			});
+        },2000);
+	}
+	
+	
+	
+	//列表
+	function getVideoList(){
+	    if(allVar.pg == 0){
+	       return false;
+	    }
+		$api.ajax({
+			method : 'player.video.index',
+			data : {
+			   cid: 1,
+			   pg: allVar.pg
+			}
+		}, function(ret, err) {
+			if (ret.code == 0 && ret.data.length) {
+				var ht = '';
+				//$api.dom('#limit-lists').innerHTML = '<h3><span style="background-image:url(../../img/limit_ico3.jpg);"></span></h3>';
+				var list = ret.data;
+				for (var x in list ) {
+		    		ht = '<div class="specialty-c" style="position: relative;">'+
+		    		'	<div class="img_commodity" tapmode="hover" onclick="$api.intoHeader( { el: this } );" data-html="commodityDetails" >' + '   <i class="hide">' + JSON.stringify(list[x]) + '</i>'+
+			    	'		<img src="'+list[x].img.url+'" alt="" />'+
+			    	'	</div>'+
+			    	'	<div class="specialty-msg clearfix" style="position: absolute;bottom: 0;left: 0;width:100%;">'+
+			    	'		<div class="specialty-title left">'+
+			    	//'			<span class="title-logo" style="background-image:url('+list[x].images.logo+');"></span>'+
+			    	'			<span class="title-t">'+list[x].name_full+'</span>'+
+			    	'		</div>'+
+			    	//'		<div class="specialty-time right">'+
+			    	//'			<span class="specialty-btn">'+list[x].discount+'折起特卖</span>'+
+			    	//'			<span class="lock_black" id="limit-timer-'+list[x].rule_id+'" >'+
+			        //'          	  剩余: <code>00</code>天<code>00</code>时<code>00</code>分<code>00</code>秒'+
+			        //'       		</span>'+
+					//'		</div>'+
+			    	'	</div>'+
+		    		'</div>';
+		    		if(allVar.pg == 1){
+		    		    $api.dom('#limit-lists').innerHTML = ht;
+		    		}else{
+		    		    $api.append( $api.dom('#limit-lists'), ht);
+		    		}
+		    		
+		    		allVar.pg += 1;
+		    		//formatTimeStamp(list[x].to_time,'limit-timer-'+list[x].rule_id);
+		    		//setInterval("flashBuyTimer("+ret.data.page_product_basic.flashbuyInfo.to_time+");",100);
+				}
+				api.parseTapmode();
+				/*
+				echo.init({
+				    offset: 0,
+				    throttle: 0
+				});
+				*/
+			}else{
+			     allVar.pg = 0;
+			}
+			api.refreshHeaderLoadDone();
+			api.hideProgress();
+		});
+	}
+	
+	
+	// Switch button
+	function randomSwitchBtn(tag) {
+		var index = $api.thisActive(tag);
+	}
+	
+	function openOutlinkWin(obj){
+		$api.getLocal( 'config', 'user', function( ret ){
+            if( ret ){
+                api.openWin({
+					name : 'outlink',
+					url : './outlink.html',
+					pageParam : {
+						title : obj.getAttribute('data-title'),
+						tag : obj.getAttribute('data-tag')
+					}
+				});
+            }else{
+                $api.intoHeader( 'signIn' );
+            }
+        });
+	}
+
+	//  Open  public header page
+	function funIntoHeader(tag) {
+		var html = tag.getAttribute('data-html');
+		if (html.indexOf('childrenMeetingplace') != -1) {
+			alert(tag.querySelector('.hide').innerHTML)
+			api.openWin({
+				name : html,
+				url : '../public/headerAndFooter.html'
+			});
+		} else if (html.indexOf('commodityDetails') != -1) {
+			alert(tag.querySelector('.hide').innerHTML)
+		} else {
+			api.openWin({
+				name : html,
+				url : '../public/headerAndFooter.html',
+				pageParam:{param:JSON.stringify({flag:tag.getAttribute('data-flag'),title:tag.getAttribute('data-title')})}
+			});
+		}
+	};
+	
+	//  Format time stamp
+    function formatTimeStamp( date,limit_id ){
+        setInterval( function(){
+        	date = parseInt(date);
+            //date -= 1000;
+            //var d = new Date( Number( date ) );
+	        var ts = date*1000 - (new Date());//计算剩余的毫秒数
+	        var dd = parseInt(ts / 1000 / 60 / 60 / 24, 10);//计算剩余的天数  
+	        var hh = parseInt(ts / 1000 / 60 / 60 % 24, 10);//计算剩余的小时数  
+	        var mm = parseInt(ts / 1000 / 60 % 60, 10);//计算剩余的分钟数  
+	        var ss = parseInt(ts / 1000 % 60, 10);//计算剩余的秒数 
+	        var ii = parseInt(ts % 60 / 10, 10);
+            //$api.dom('#'+limit_id).innerHTML = '剩余: <code>'+zerofill( d.getDate() )+'</code>天<code>'+zerofill( d.getHours() )+'</code>时<code>'+zerofill( d.getMinutes() )+'</code>分<code>'+zerofill( d.getSeconds() )+'</code>秒';
+            $api.dom('#'+limit_id).innerHTML = '剩余: <code>'+ dd +'</code>天<code>'+ hh +'</code>时<code>'+ mm +'</code>分<code>'+ ss +'</code>秒';
+        },1000);
+        function zerofill( num ){
+            return num < 10 ? '0' + num : num;
+        }
+    }
+    function loadScroll(){
+    	allVar.swiper = new Swiper('.swiper-container', {
+            slidesPerView: 3.6,
+            spaceBetween: 20,
+            freeMode: true
+        });
+    }
+</script>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <style>
+    	body{background:transparent;}
+        .ic_close_v1{ background: url() no-repeat center; background-size: 70% auto; width: 42px; height: 42px; }
+        .commodityType{ position: fixed; left: 0; bottom: 0; right: 0; z-index: 1; }
+        .commodityType header{ padding: 10px; background-color: #fafafa; }
+        .commodityType header .title{ padding: 10px 0;  }
+        .commodityType header .title .img-commodity{ width: 70px; height: 80px;  background:white url() no-repeat center; background-size: 100% auto; box-shadow: 0 0 5px #eee; border-radius: 4px; }
+        .commodityType header .title .info{ padding: 0 20px 0 10px; color: #333; line-height: 26px; position: relative}
+        .commodityType header .title .info .ic_close_v1{position:absolute;top:-20px; right:-10px;}
+        .commodityType header .title .info .monny{ color: #ff0000; font-size: 1.2rem; }
+        .commodityType header .switch{ margin: 6px 10px;  line-height: 22px;  margin-top: -2px; max-height: 150px; overflow: auto; }
+        .commodityType header .switch .btn{ padding: 2px 6px;   display: inline-block;  border: 1px solid #e5e5e5; border-radius: 4px; color: #333; margin: 6px 4px; }
+        .commodityType header .switch .btn.active{ color: #ff7f0b; border-color: #ff7f0b; }
+        .commodityType header .subtitle{ text-align: left; padding: 10px;  padding-bottom: 0;  line-height: 32px;  }
+        .commodityType header .switch-wrap{ padding: 10px 0; }
+        .commodityType header .btns{ border: 1px solid #b3b3b3; overflow: hidden; display: inline-block; border-radius: 4px; text-align: center; margin-left: 10px; }
+        .commodityType header .btns span{ color: #333;  background:url() no-repeat center top; background-size: 36px auto; display: inline-block;  padding: 0 14px; float: left; }
+        .commodityType header .btns span.add{ background-position: center -45px; }
+        .commodityType header .btns span+ span{ border-left: 1px solid #b3b3b3; }
+        .commodityType .foot-btn{ text-align: center; font-size: 1.2rem; color: white;background-color: #fff; /*height:42px;*/border-top:1px solid #e5e5e5;}
+        .commodityType .foot-btn .confirm{  padding:0 15px; margin:10px auto; background-color:#d0021b; line-height:30px; border-radius: 5px;display:inline-block; }
+        
+        .share{ position: fixed; left: 0; bottom: 0; right: 0; z-index: 1; padding: 10px; background-color: #fafafa; }
+        .share .title{ line-height: 42px; text-align: center; font-size: 1.4rem; position: relative; }
+        .share .title .ic_close_v1{ position: absolute; right: -10px; top: -10px; }
+        .share ul{ /*padding: 20px;*/ overflow: hidden; }
+        .share ul li{ width: 25%;/*width: 33.333333%;*/ float: left; text-align: center; line-height: 26px; padding-bottom: 10px; }
+        .share ul li img{ width: 80%; }
+        .share .copy span{ display: block; line-height: 32px; text-align: center; color: white; background-color: #ff4c00; border-radius: 50px; font-size: 1.2rem; }
+        
+        .close{ position: fixed; left: 0; top: 0; right: 0; bottom: 0; }
+        
+        .foot-btns{ padding: 5px 10px; }
+        .foot-btns .sign-out{float:left;width:100%; padding:2px 12px;line-height: 42px;background-color:#272727;margin-bottom:5px;/* text-align: center; */font-size:1.4rem; color:#fff; /* background-color:#d0021b; *//* border: 1px solid #dd3214; */ border-radius: 6px;  }
+        .foot-btns .sign-out .div-left{float:left;color:#FF7F0B;}
+        .foot-btns .sign-out .div-right{float:right;color:#E53F4C;font-weight:bolder;}
+        .foot-btns .sign-out span{font-size:0.9rem;color: #666666;}
+        
+        ul{ padding: 0px; }
+        ul li{ background:url() no-repeat right 12px; background-size: 26px auto; line-height: 42px; color: #333;  padding: 5px 0;}
+        ul li.active{ background-position: right -58px; }
+        ul li .img_pay{ background:url() no-repeat center; background-size: 100% auto; width: 42px; height: 42px; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="commodityType">
+    		<div class="">
+                <img style="width:100%;" id="tip-img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502217728322&di=7e553aad02e7224e81b1927c28d9ea58&imgtype=jpg&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F29381f30e924b8994121662564061d950a7bf68a.jpg"/>
+            </div>
+        <header>
+        	<div class="spec">
+        		<div class="foot-btns" id="products-pay">
+			        <!--
+			        <div tapmode="hover" onclick="playerPay(28);"  class="sign-out">
+			        	<div class="div-left">普通会员<span>全站</span></div>
+			        	<div class="div-right">￥28</div>
+			        </div>
+			        <div tapmode="hover" onclick="playerPay(58);"  class="sign-out" >
+			        	<div class="div-left">超级会员<span>全站免费12小时</span></div>
+			        	<div class="div-right">￥58</div>
+			        </div>
+			        -->
+			    </div>
+        	</div>
+            
+    		<!--
+            <div class="spec" >
+            	
+                <div class="flex-wrap border-b switch-wrap">
+                    <div class="subtitle"></div>
+                    <div class="flex-con switch">
+                        <div tapmode="hover" onclick="funSwitch(  { el:this }  );"  class="btn active">绿色绿色绿色绿色绿色绿色</div>
+                        <div tapmode="hover" onclick="funSwitch(  { el:this }  );"  class="btn">绿色绿色绿色绿色绿色绿色2</div>
+                    </div>
+                </div>
+            </div>
+            -->
+            <ul style="clear: both;">
+			        <li tapmode="hover" onclick="funSwitch( { el: this } )" class="flex-wrap border-b ic_choice_pay active" data-payment="aliPay" >
+			            <div class="img_pay" style="background-image:url(../../img/img_ali.png);" ></div>
+			            支付宝
+			        </li>
+			        <!--
+			        <li tapmode="hover" onclick="funSwitch( { el: this } )" class="flex-wrap border-b ic_choice_pay" data-payment="wxPay" >
+			            <div class="img_pay" style="background-image:url(../../img/img_weix.png);" ></div>
+			            微信支付
+			        </li>
+			        -->
+			</ul>
+        </header>
+        <!--
+        <div class="foot-btn">
+            <div tapmode="hover" onclick="cartAdd( { el: this } );" data-has-loginIn="true" data-name="cart" class="confirm">加入购物车</div>
+        </div>
+        -->
+    </div>
+    <div class="share hide">
+        <div class="title">分享给朋友们<div tapmode="hover" onclick="closeCurrent( )" class="ic_close_v1"></div></div>
+        <ul>
+            <!--<li tapmode="hover" onclick="noPerfact();" >
+                <p><img src="../../img/img_weibo.png" alt=""></p>
+                <p>微博</p>
+            </li>
+            -->
+            <li tapmode="hover" onclick="sharingToMoments( { el: this } );" data-scene="session" data-html="integralExchange" >
+                <p><img src="../../img/img_weixin.png" alt=""></p>
+                <p>微信好友</p>
+            </li>
+            <li tapmode="hover" onclick="sharingToMoments( { el: this } );" data-scene="timeline" data-html="integralExchange" >
+                <p><img src="../../img/img_moments.png" alt=""></p>
+                <p>朋友圈</p>
+            </li>
+            <!--
+            <li tapmode="hover" onclick="noPerfact();" >
+                <p><img src="../../img/img_qq.png" alt=""></p>
+                <p>QQ</p>
+            </li>
+            <li tapmode="hover" onclick="noPerfact();" >
+                <p><img src="../../img/img_tencent_weibo.png" alt=""></p>
+                <p>腾讯微博</p>
+            </li>
+            <li tapmode="hover" onclick="noPerfact();" >
+                <p><img src="../../img/img_tencent_space.png" alt=""></p>
+                <p>QQ空间</p>
+            </li>
+            -->
+        </ul>
+        <div tapmode="hover" onclick="copy();"  class="copy"><span>复制网址分享给好友</span></div>
+    </div>
+    <div tapmode="hover" onclick="closeCurrent( this );" class="close"></div>
+</body>
+</html>
+<script type="text/javascript" src="../../js/api.js"></script>
+<script type="text/javascript">
+	var allVar = {};
+    apiready = function(){
+        allVar.page = $api.dom( '.'+api.frameName );
+		if( allVar.page ){
+			$api.removeCls( allVar.page, 'hide' );
+		}
+        $api.setLocal( 'config', [{ key : 'hasPopup', value : { win : api.winName , frm : api.frameName} }]);
+        allVar.share = JSON.parse( api.pageParam.share );
+        if( api.frameName == 'commodityType' ){
+        	/*
+            $api.dom('.commodityType .title').innerHTML = 
+            '<div class="img-commodity" style="background-image:url('+allVar.share.product.image_url+');" ></div>'+
+            '<div class="flex-wrap flex-con info">'+
+            '    <div class="flex-con">'+
+            '        <p>'+allVar.share.product.name+'</p>'+
+            '        <p class="monny" id="share-price" >￥ '+allVar.share.product.price+'</p>'+
+            '    </div>'+
+            '    <div tapmode="hover" onclick="closeCurrent( )" class="ic_close_v1"></div>'+
+            '</div>';
+            */
+            getProducts();
+            api.parseTapmode();
+        }else{
+            $api.getLocal( 'config', 'user', function( ret ){
+                if( ret ){
+                
+                }
+            })
+        }
+        
+        api.addEventListener({
+            name:'resume'
+        }, function(ret, err){        
+            //alert('这里检测支付状况');
+            //$api.addCls( allVar.page, 'hide' );
+            getDeviceOrderPayStatus();
+        });
+    }
+    
+    function getProducts(){
+        $api.ajax({
+            method : 'player.pay.products',
+            data : {
+                
+            }
+        },function( ret, err ){
+            if(ret.code == 0 && ret.data){
+                $api.attr($api.dom('#tip-img'),'src',ret.data.tip_img);
+                var ht = '';
+                var uuid_product_id = $api.getStorage('uuid_product_id');
+                var unni_product_price = 0;
+                ret.data = ret.data.products;
+                for(var i in ret.data){
+                    //console.log(JSON.stringify(ret.data[i]));
+                    /*
+                    if(uuid_product_id != ret.data[i].id){
+                        if(ret.data[i].rule_before_product_id){
+                            ht += '<div tapmode="hover" onclick="playerPay('+ret.data[i].id+');"  class="sign-out">'+
+                            '    <div class="div-left">'+ret.data[i].name+'<span></span></div>'+
+                            '    <div class="div-right">￥'+(Number(ret.data[i].price)-Number(unni_product_price))+(unni_product_price?'<span style="font-size:0.8rem;">(补)</span>':'')+'</div>'+
+                            '</div>';
+                        }else{
+                            ht += '<div tapmode="hover" onclick="playerPay('+ret.data[i].id+');"  class="sign-out">'+
+                            '    <div class="div-left">'+ret.data[i].name+'<span></span></div>'+
+                            '    <div class="div-right">￥'+ret.data[i].price+'</div>'+
+                            '</div>';
+                        }
+                    }else if(uuid_product_id && uuid_product_id == ret.data[i].id){
+                        unni_product_price = ret.data[i].price;
+                    }
+                    */
+                    ht += '<div tapmode="hover" onclick="playerPay('+ret.data[i].id+');"  class="sign-out">'+
+                    '    <div class="div-left">'+ret.data[i].name+'<span></span></div>'+
+                    '    <div class="div-right">￥'+ret.data[i].price+'</div>'+
+                    '</div>';
+                }
+                $api.dom('#products-pay').innerHTML = ht;
+                api.parseTapmode();
+            }
+        });
+    }
+    
+    function getDeviceOrderPayStatus(){
+        var pre_pay_order_id = $api.getStorage('pre_pay_order_id');
+        $api.ajax({
+            method : 'player.pay.status',
+            data : {
+                order_id: pre_pay_order_id
+            }
+        },function( ret, err ){
+            //console.log(JSON.stringify(ret));
+            /*
+            if(ret.code == 0 && ret.data.pay && $api.getStorage('pre_pay_product_id') == ret.data.pay.product_id ){
+                $api.setStorage('uuid_product_id',ret.data.pay.product_id);
+                msg = '支付成功';
+            }else{
+                msg = '未支付或支付失败';
+            }
+            */
+            if(ret.code == 0 && ret.data.pay_status == '10' && $api.getStorage('uuid') == ret.data.uuid ){
+                msg = '支付成功';
+                flag = true;
+            }else{
+                msg = '未支付或支付失败';
+                flag = false;
+            }
+            api.toast({
+	            msg:msg,
+	            location: 'middle'
+            });
+            if(!flag){
+                
+            }
+            setTimeout(function(){
+                api.execScript({
+                    name: 'commodityDetails',
+                    frameName: 'commodityDetails',
+                    script: 'getProductDetails(true);'
+                });
+                api.closeFrame();
+            },3000);
+        });
+    }
+    
+    function playerPay(id){
+        var appBundle = '';
+        if(api.systemType == 'android'){
+            appBundle = 'com.eg.android.AlipayGphone';
+        }else{
+            appBundle = 'alipay';
+        }
+        var installed = api.appInstalled({
+            sync: true,
+            appBundle: appBundle
+        });
+        if(!installed){
+            api.confirm({
+                msg: '请先安装支付宝app',
+                buttons: ['确定', '取消']
+            },function(ret,err){
+            	//console.log(ret.buttonIndex);
+            	if(ret.buttonIndex == 1){
+                    if( api.systemType == 'ios' ){
+                        api.openApp({
+                            iosUrl: 'http://mobile.alipay.com',//例如调用系统浏览器Safari打开百度，其中http为Safari的URL Scheme；同理，微信的URL Scheme为weixin，因此可以通过传weixin://来打开微信
+                            appParam: {
+                                appParam: '支付宝'
+                            }
+                        });
+                    }else if( api.systemType == 'android' ){
+                        api.openFrame({
+                            name: 'outlink',
+                            url: 'http://mobile.alipay.com',
+                            rect: {
+                                x:0,
+                                y: 0,
+                                w: 'auto',
+                                h: 'auto'
+                            },
+                            pageParam: {
+                            },
+                            bounces:true,
+                            //showProgress:false,//progress会覆盖该参数设置
+                            progress:{
+                                type:"default"             
+                            }
+                        });
+                        /*
+                        api.openApp({
+                            androidPkg: 'android.intent.action.VIEW',
+                            mimeType: 'text/html',
+                            uri: 'http://mobile.alipay.com'
+                        },function( ret, err ){
+                            
+                        });
+                        */
+                    }else{
+                        alert('不支持改类型手机');
+                    }
+            	}
+            });
+            return;
+        }
+    	var payment = $api.dom('ul li.active').getAttribute('data-payment');
+    	//$api.setStorage('pre_pay_product_id',id);
+    	if(payment == 'aliPay'){
+    	    $api.ajax({
+                method : 'player.pay.aliqr',
+                data : {
+                    product_id: id
+                }
+            },function( ret, err ){
+                //console.log(JSON.stringify(ret));
+                $api.setStorage('pre_pay_order_id',ret.data.order_id);
+                api.openFrame({
+                    name: 'outlink',
+                    url: ret.data.qr_url,
+                    rect: {
+                        x:0,
+                        y: 0,
+                        //w: api.winWidth ,
+                        //h: $api.dom( '.main' ).offsetHeight
+                        //w: 'auto',
+                        //h: 'auto'
+                        w: 0,
+                        h: 0
+                    },
+                    pageParam: {
+                        tag: 1,
+                        member_id: 0
+                    },
+                    bounces:true,
+                    //showProgress:false,//progress会覆盖该参数设置
+                    progress:{
+                        type:"default"             
+                    }
+                });
+            });
+    	    return;
+    	    $api.ajax({
+                method : 'player.pay.alipay',
+                data : {
+                    
+                }
+            },function( ret, err ){
+                if(ret.code == 0){
+                    aliPay = api.require('aliPayPlus');
+                    aliPay.payOrder({
+                        orderInfo: ret.data
+                    }, function(ret, err) {
+                        if(ret.code == '9000'){
+                            api.alert({
+                                title: '提示',
+                                msg: '支付成功',
+                            }, function(ret, err) {
+                            
+                            });
+                        }
+                    });
+                }
+            });
+    	}else if(payment == 'wxPay'){
+            $api.ajax({
+                method : 'player.pay.wx',
+                data : {
+                    
+                }
+            },function( ret, err ){
+                console.log(JSON.stringify(ret));
+                wxPay = api.require('wxPay');
+                wxPay.payOrder({
+                    apiKey: ret.data.appid,
+                    orderId: ret.data.prepay_id,
+                    mchId: ret.data.mch_id,
+                    nonceStr: ret.data.nonce_str,
+                    timeStamp: ret.data.timestamp,
+                    package: 'Sign=WXPay',
+                    sign: ret.data.sign
+                }, function(ret, err) {
+                    //console.log(JSON.stringify(ret));
+                    if (ret.status) {
+                        //支付成功
+                        api.toast({
+                            msg: '支付成功',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                    } else {
+                        //api.alert(err.code);
+                        api.toast({
+                            msg: '支付失败：'+err.code,
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                    }
+                });
+            });
+    	}
+    }
+
+    // Switch button    
+    function funSwitch( obj ) {
+        var index = $api.thisActive( obj );
+        var payment = $api.dom('ul li.active').getAttribute('data-payment');
+    }
+    
+    //  Close the current page
+    function closeCurrent( ){
+        $api.removeLocal( 'config', 'hasPopup',function( ret ){
+            api.closeFrame();
+        });
+    }
+    
+    //  Open  public header page
+    function funIntoHeader( tag ){
+        api.openWin({
+            name: tag.getAttribute('data-name'),
+            url: '../public/headerAndFooter.html'
+        });
+    }
+    
+    //  Sharing to moments
+    function sharingToMoments( obj ){
+        $api.getLocal( 'config', 'user', function( ret ){
+            if( ret ){
+                if( allVar.share.thumb ){
+                    allVar.share.thumb.indexOf('http') == -1 ? (function(){
+                        startShare( obj );
+                    })():(function(){
+                        var thumb = allVar.share.thumb.split('/');
+                        api.download({
+                            url: allVar.share.thumb,
+                            savePath: 'fs://download/share/'+thumb[thumb.length-1],
+                            cache: false,
+                            allowResume:false
+                        },function(ret,err){
+                            if (ret) {
+                                allVar.share.thumb = ret.savePath;
+                                startShare( obj )
+                            } else{
+                                // alert( JSON.stringify( err ))
+                            }
+                        });
+                    })();
+                }else{
+                    startShare( obj );
+                }
+            }
+        })
+    }
+    
+    function startShare( obj ){
+        allVar.wx = api.require('wx');
+        allVar.wx.shareWebpage({
+            scene : obj.el.getAttribute("data-scene"),
+            title:  allVar.share.title,
+            contentUrl: allVar.share.url,
+            thumb : allVar.share.thumb
+        }, function(ret, err){
+            if(ret.status){
+                closeCurrent();
+                // if( allVar.share.scene == 'integral' ){
+                //     $api.ajax({
+                //         method : 'xiguo.gift.addpoint',
+                //         data : {
+                //             member_id : allVar.share.member_id,
+                //             product_id : allVar.share.id
+                //         }
+                //     },function( ret, err ){
+                //         if( ret.code == 0 ){
+                //             $api.append( allVar.share.el.el, '<i class="hide">'+JSON.stringify( { member_id :　allVar.share.member_id, product_id : allVar.share.id} )+'</i>')
+                //             $api.intoHeader(allVar.share.el);
+                //             closeCurrent();
+                //         }else{
+                //             $api.toast( ret  );
+                //         }
+                //     })
+                // }else{
+                //     closeCurrent();
+                // }
+            }else{
+            	//$api.toast( '分享失败' );
+            	allVar.wx.shareWebpage({
+		            scene : obj.el.getAttribute("data-scene"),
+		            title:  allVar.share.title,
+		            contentUrl: allVar.share.url
+		        }, function(ret, err){
+		        	
+		        });
+            }
+        });
+    }
+    
+    function copy(){
+        allVar.clipBoard = api.require('clipBoard');
+        allVar.clipBoard.set({
+            value: allVar.share.url
+        }, function(ret, err){
+            if(ret.status){
+                //alert( JSON.stringify( ret ))
+                $api.toast( '已复制' );
+            }else{
+                $api.toast( err.msg );
+            }
+        });
+    }
+    
+    function noPerfact(){
+    	$api.toast( '第三方审核中...' );
+    }
+</script>

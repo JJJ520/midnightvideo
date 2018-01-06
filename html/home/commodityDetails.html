@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <title></title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+	<style>
+		body{background:#efefef;}
+		body{background-color:black;color:white;}
+		.advertisement {	position: relative;	width: 100%;/*height: 240px;*/	margin: 0 auto;	background: #444;overflow: hidden; /*border-bottom : 1px solid #ff4c00;*/ }
+		.wrapper {	height: 100%;	margin: 0 auto; overflow: hidden;	}
+		.pictures {		height: 100%;	position: absolute;	z-index: 1;	background-color: white;	}
+		.pictures .flex-con{   background: url() no-repeat center; background-size: auto 100%; }
+		.painting { height: 100%; background-size: 100% auto; }
+		.indicator { position: absolute; left: 50%; bottom: -100%; margin-left: -55px;  width: 110px; height: 14px;  background-position: 0 -5px; z-index: 1; }
+		.indicator .dotty { position: absolute; width: 10px; height: 10px; border-radius: 10px; background: #e53f4c; }
+		.advertisement .number{ background-color: rgba(244, 169, 129, .6); position: absolute; right: 10px; bottom: 10px; z-index: 2;  padding: 6px 10px; border-radius: 4px; color: white; }
+		
+		.details{ /* padding: 10px; */ font-size: 0.9rem; line-height: 18px; color: #333;  }
+		.details h6{ font-size: 1.2rem; padding: 10px; background-color:#f6f6f6;color:#333;}
+		.details .emphasize{ font-size: 1rem; color: #fc663d; padding:10px 15px; margin-bottom:10px; background:#fff;}
+		.details p{}
+		.details del{ font-size: 0.9rem; color: #aaa; }
+		.details span{ padding-right: 5px; }
+		.details .text{ color: #666; }
+		
+		.evaluation{ color: #333; background:#fff;}
+		.evaluation .title{ font-size: 1.2rem; padding: 10px ; }
+		.evaluation li{ padding: 10px; }
+		.evaluation li .ic_user_default{  width: 60px; height: 50px;  background: url() no-repeat center; background-size: 100% auto; border-radius: 50%; }
+		.evaluation li h6{ padding-bottom: 4px; }
+		.evaluation li h6 span{ float: right; }
+		.evaluation li p{ font-size: 0.9rem; color: #666; }
+		.evaluation .btn{ padding: 10px; }
+		.evaluation .btn span{ display: block; background-color: #c3d797; color: white; border-radius: 6px; text-align: center; line-height: 32px; }
+		
+		.commodity-switch{ /*padding: 10px;*/ padding-bottom: 60px; background:#fff;/*margin-top:10px;*/}
+		.commodity-switch .switch{ color: #333; line-height: 42px; text-align: center; font-size: 1.4rem; }
+		.commodity-switch .switch .flex-con.active{ color: #ff9a53; }
+		.commodity-switch .switch-content .content{ display: none; padding: 10px 0; } 
+		.commodity-switch .switch-content .content.active{ display: block; }
+		.commodity-switch .switch-content .content { overflow: auto; }
+		.commodity-switch .switch-content .content img{ max-width: 100% !important; margin:0 !important; padding:0 !important;}
+		.commodity-switch .switch-content .content div{max-width: 100% !important; width:100% !important; margin:0 !important; padding:0 !important;}
+		#player-info img{max-width: 100% !important; margin:0 !important; padding:0 !important;}
+		
+        .foot-switch{ position: fixed; left: 0; bottom: 0; right: 0; background-color: #fff; height: 52px; line-height:33px;  text-align: center; color: white; font-size: 1.2rem; /*border-top:1px solid #e6e6e6*/}
+        .foot-switch-ico .flex-con:first-child{background:url(../../img/ic_cart_v1.png) no-repeat 70% center; background-size:30px;  text-align: center; position: relative;}
+        .foot-switch .active,.foot-switch .spec{margin:10px 10px 10px 5px; border-radius:5px; color:#fff;padding:0 10px;}
+        .foot-switch .active{ background-color:#ff4c00;}
+        .foot-switch .spec{ background-color: #d0021b;}
+        .foot-switch .ic_personal_online{width:30px; height: 30px; background-color:#ff4c00;margin:10px 10px 10px 0;-webkit-text-fill-color:transparent; background:url() no-repeat center;background-size:30px auto;}
+        .foot-switch .items_quantity span{height: 15px; padding:0 5px; line-height:15px;  border-radius:100px; display:block;background-color:#ff0000;color:#fff;text-align: center;font-size:0.825rem;position:absolute;top:3px;left:68%;}
+		
+		.head-btn{ background-color: rgba(238, 118, 54, .9); line-height: 42px; color: white; position: fixed; left: 0; top: 0; right: 0; z-index: 2; }
+		.head-btn .flex-con{}
+		.head-btn .flex-con span{ background: url() no-repeat 10px center; background-size: 22px auto; padding: 4px 10px; padding-left: 40px; }
+		.head-btn .flex-con:first-child{ text-align: right; }
+		.head-btn .flex-con:last-child span{ border-left: 1px solid white; }
+		
+		.sales-service{margin:10px 0;background-color:#fff; padding:10px 10px;}
+		.title p{margin-top:5px;}
+		#flash-buy-info .flash-buy-info-time{padding:10px 15px;background-color:#fff; margin-bottom:10px;}
+		#flash-buy-info span{ padding-right:0px;color:#ff4c00; }
+		#flash-buy-info .moo-time{ font-size:1.2rem;padding-left:2px; }
+	</style>
+</head>
+<body>
+	<style>
+	.play-btn{ 
+		border: 45px solid #B3B3B3;
+	    border-radius: 100%;
+	    color: #B3B3B3;
+	    float: left;
+	    height: 0;
+	    /* margin: 0 20px; */
+	    position: relative;
+	    width: 0;
+	    display:table-cell; vertical-align:middle;
+    }
+    .play-btn a {
+	    border-style: solid;
+	    left: -3px;
+	    position: absolute;
+	    text-indent: -9999px;
+	    top: -8px;
+	    border-color: transparent transparent transparent #fff;
+	    border-width: 8px 0 8px 12px;
+	    height: 0;
+	    width: 0;display:table-cell; vertical-align:middle;
+	}
+	</style>
+	<div class="head-btn flex-wrap hide">
+	</div>
+	<div class="advertisement">
+		<img  style="width:100%;position:absolute;left:0;top:0;" src="" id="player-img"/>
+		<div tapmode="hover" onclick="aPlay();" style="position:absolute; " class="play-wrap">
+			<div class="play-btn" style="opacity: 0.8;">
+		  		<a href="#" title="start">Start</a>
+		  	</div>
+		</div>
+	</div>
+	
+	<div class="details" style="background-color:black;color:white;">
+		<div class="title" style="background-color:black;color:white;">
+		<!--<h6></h6>-->
+		<p class="sales-service" style="background-color:black;color:white;">
+		 <span style="background-color:black;color:white;"><span style="font-size: 1.2rem;" onclick="aPlay();">影片名称： </span><span id="player-title">...</span></span>
+		</p>
+		</div>
+	</div>
+	
+	<div class="evaluation" tapmode="hover" data-name="commodityType" style="background-color:black;color:white;">
+		<div class="title" style="background-color:black;color:white;">影片简介<span></span></div>
+		<ul style="background-color:black;color:white;">
+			<li class="flex-wrap border-b" style="background-color:black;color:white;">
+				<div class=""></div>
+				<div class="flex-con">
+					<h6><span></span></h6>
+					<p id="player-info" style="background-color:black;color:white;"></p>
+				</div>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="commodity-switch"  style="background-color:black;color:white;">	
+		<div class="flex-wrap switch border-t" >
+			<div tapmode="hover" onclick="funSwitch({el:this})" class="flex-con active" style="background-color:black;color:white;">精彩截屏</div>
+		</div>
+		<div class="switch-content" style="background-color:black;color:white;">
+			<div class="content active" style="background-color:black;color:white;">
+				<!--<img src="../../img/edf.jpg" alt="">-->
+				
+			</div>
+		</div>
+	</div>
+	
+	
+</body>
+</html>
+<script type="text/javascript" src="../../js/api.js"></script>
+<script type="text/javascript" src="../../js/iscroll.js"></script>
+<script type="text/javascript">
+	var allVar = {};
+	allVar.mp4 = '';
+	allVar.see_time = 0;
+	allVar.disable_play = false;
+	var aplayer;
+    apiready = function(){
+   		allVar.param  = JSON.parse( api.pageParam.param );
+    	api.setRefreshHeaderInfo({
+            bgColor: '#ccc',
+            textColor: '#fff',
+        }, function(ret, err){
+            getProductDetails();
+        });
+        
+        aplayer = api.require('playModule');//api.require('aplayer');
+        aplayer.init({
+            fullBtnPlan : 1,
+            isImmerse : false
+        });
+        
+        allVar.height = api.winWidth*0.5625;
+        $api.css($api.dom('.advertisement'),'height:'+(allVar.height - 3)+'px');
+        $api.css($api.dom('.play-wrap'),'top:'+(allVar.height/2-45)+'px;left:'+(api.winWidth/2-45)+'px');
+    	
+		// $api.dom('.evaluation .title span').innerHTML = $api.domAll('.evaluation ul li').length;
+		getProductDetails();
+		
+		//videoPlayer = api.require('videoPlayer');
+		//fnOpen();
+    }
+    
+    function aPlay(){
+    	if(allVar.see_time == 0 || allVar.see_time == '0' || allVar.disable_play){
+    	    fnPause();
+    		funSpec( { el : $api.dom('.evaluation') } );
+    		return;
+    	}
+        aplayer.play({
+            rect:
+            {   
+            	x: 0,
+                y : 0,
+                w : api.winWidth,
+                h: allVar.height //api.winWidth*0.5625
+            },
+            fixedOn: api.frameName,
+            title: 'test',
+            url: allVar.mp4,//'http://resource.apicloud.com/video/apicloud3.mp4',
+            defaultBtn: true,
+            //enableFull : true,
+            isTopView : false,
+            isFullBtn : true,
+            scalingMode : 1,
+            isShowProcessView : false,
+            isShowTimeLable : false,
+            isOpenGesture : false
+        }, function(ret, err) {
+            /*
+            api.toast({
+	            msg:'正在播放的是频道：'+allVar.cid,
+	            duration: 10000
+            });
+            */
+            timer();
+        });
+        
+        aplayer.addEventListener({
+		    name: 'play'
+		}, function(ret, err) {
+		    //console.log("addEventListener>>>>" + JSON.stringify(ret));
+		    timer();
+		});
+		aplayer.addEventListener({
+            name: 'unfull'
+        }, function(ret, err) {
+            api.setScreenOrientation({
+                orientation: 'auto'
+            });
+        });
+        aplayer.addEventListener({
+            name: 'playEnd'
+        }, function(ret, err) {
+            fnStop();
+            fnCancelFullScreen();
+        });
+		/*
+		aplayer.addEventListener({
+		    name: 'pause'
+		}, function(ret, err) {
+		    console.log("addEventListener>>>>" + JSON.stringify(ret));
+		});
+		*/
+    }
+    
+    function timer(){
+        if(allVar.see_time == 0 || allVar.see_time == '0' || allVar.disable_play){
+            fnPause();
+            funSpec( { el : $api.dom('.evaluation') } );
+            return;
+        }
+        var uuid_product_id = $api.getStorage('uuid_product_id');
+        var second = 0;
+        var max_second = allVar.see_time;
+        allVar.timer = setInterval(function(){
+            aplayer.getCurrentPosition(function(ret, err) {
+                if(ret.status){
+                    //console.log(ret.currentPosition);
+                    second = ret.currentPosition/1000;
+                    //console.log(second);
+                    /*
+                    switch(uuid_product_id){
+                        case 1:
+                            max_second = 6;
+                            break;
+                        case 2:
+                            max_second = 12;
+                            break;
+                        case 3:
+                            max_second = 18;
+                            break;
+                        default:
+                            max_second = 5;
+                            break;
+                    }
+                    */
+                    
+                    if(second >= max_second){
+                        allVar.disable_play = true;
+                        fnPause();
+                        //fnStop();
+                        //console.log('已播放'+second+'秒');
+                        clearInterval(allVar.timer);
+                        fnCancelFullScreen();
+                        funSpec( { el : $api.dom('.evaluation') } );
+                    }
+                }
+            });
+        },1000);
+    }
+	
+	function fnStart(){
+        aplayer.start(function(ret, err) {
+        });
+    }
+    function fnPause(){
+        aplayer.pause(function(ret, err) {
+        });
+    }
+    function fnStop(){
+        aplayer.stop(function(ret, err) {
+        });
+    }
+    function fnClose(){
+        aplayer.stop(function(ret, err) {
+        });
+    }
+    
+    function fnFullScreen(){
+        aplayer.full(function(ret, err) {
+            
+        });
+    }
+    function fnCancelFullScreen(){
+        aplayer.unfull(function(ret, err) {
+            api.setScreenOrientation({
+                orientation: 'auto'
+            });
+        });
+    }
+    
+    function fnAddEventListener(){
+        videoPlayer.addEventListener({
+            name:'leftUp'
+        }, function(ret, err){        
+            if( ret ){
+                alert( JSON.stringify( ret ) );
+            }else{
+                alert( JSON.stringify( err ) );
+            }
+        });
+    }
+	
+	//	获取货品详情 xiguo.product.index
+    function getProductDetails(reload){
+        allVar.disable_play = false;
+        //console.log('rr---rr');
+        
+    	api.showProgress({
+			animationType: 'zoom',
+			title: '',//'加载中...',
+			text: '',//'稍后...',
+			modal: false
+		});
+		
+        $api.ajax({
+				method : 'player.video.info',
+				data : {
+					vid : (allVar.param.id?allVar.param.id:0)
+				}
+			},function( ret, err ){
+            if( ret.code == 0 ){
+				//allVar.goods_id = ret.data.page_product_basic.goods_id;
+				/*
+				var imgs = ret.data.page_product_basic.image;
+				//$api.dom('.pictures').innerHTML = '';
+				for( var x in imgs ){
+					//$api.append( $api.dom('.pictures'),
+					//'<div style="background-image:url('+imgs[x].image_id+');" class="flex-con"></div>');
+				}
+				*/
+				allVar.cid = ret.data.category_id;
+				allVar.see_time = ret.data.see_time;
+				if(reload){
+				    api.hideProgress();
+                    api.refreshHeaderLoadDone();
+				    return;
+				}
+				//console.log(allVar.see_time);
+				$api.attr($api.dom('#player-img'),'src',ret.data.img.url);
+				$api.dom('#player-title').innerHTML = ret.data.name_full;
+				$api.dom('#player-info').innerHTML = ret.data.content;
+				var imgs = '';
+				for(var i in ret.data.screenshots){
+				    imgs += '<img src="'+ret.data.screenshots[i]+'" width="100%"/>';
+				}
+				$api.dom('.commodity-switch .switch-content .content.active').innerHTML = imgs;
+				allVar.mp4 = ret.data.mp4.url;
+				//funInitializationAdvertisement();
+				/*
+				var commentStr = '';
+				if ( ret.data.comment.all.comment_list instanceof Array ){
+					
+				}else{
+					var comments = ret.data.comment.all.comment_list;
+					for( var y in comments ){
+						commentStr += '<li class="flex-wrap border-b">'+
+							'<div class="ic_user_default"></div>'+
+							'<div class="flex-con">'+
+							'	<h6><span>'+formatTimeStamp(comments[y].time)+'</span>'+comments[y].author+'</h6>'+
+							'	<p>'+comments[y].comment+'</p>'+
+							'</div>'+
+						'</li>';
+					}
+					$api.dom('.evaluation ul').innerHTML = commentStr;
+				}
+				*/
+			}
+			api.hideProgress();
+			api.refreshHeaderLoadDone();
+		});
+	}
+	
+	//change price
+	function changePrice(price,mktprice){
+		$api.dom('#product-price').innerHTML = '￥' + price.toFixed(2);
+	    $api.dom('#product-mktprice').innerHTML = '￥' + mktprice.toFixed(2);
+	}
+	
+	
+	//	自购
+	function funSpec( obj ){
+		allVar.share = {  cid:allVar.cid };
+        $api.popup( obj );
+	}
+	
+	//	Initialization	advertisement
+	function funInitializationAdvertisement () {
+		var elSlide = $api.domAll('.pictures .flex-con');
+		for( var x in elSlide ){
+			if( elSlide[x].nodeType ){
+				elSlide[x].style.width = $api.dom('body').offsetWidth+'px';
+			}
+		}
+		allVar.myScroll = new IScroll('.wrapper', {
+			scrollX: true,
+			momentum: false,
+			snap: true,
+			indicators: {
+				el: $api.dom('.indicator'),
+				resize: false
+			}
+		});
+		allVar.myScroll.on('scrollEnd', scrollCallback);
+	}
+
+	// Scroll callback
+	function scrollCallback( ){
+		$api.dom('.advertisement .number').innerHTML = parseInt( ( Math.abs( this.x ) / this.wrapperWidth + 1 ) ) +'/'+$api.domAll('.pictures .flex-con').length;
+	}
+	
+	// Switch button    
+	function funSwitch( obj ) {
+		var index = $api.thisActive( obj );
+		var con = $api.domAll('.commodity-switch .switch-content .content');
+		for( var x in con ){
+			if( con[x].nodeType ){
+				if( index == x ){
+					$api.addCls( con[x], 'active' );
+				}else{
+					$api.removeCls( con[x], 'active' );
+				}
+			}
+		}
+	}
+	
+    //  Open  public header page
+    function funIntoHeader( tag ){
+        api.openWin({
+            name: tag.getAttribute('data-name'),
+            url: '../public/headerAndFooter.html'
+        });
+    }
+	
+	
+	//	Was executed by headerAndFooter.html page
+	function funShowHeadBtn(){
+		if( $api.dom('.head-btn').className.indexOf('hide') == -1 ){
+			$api.addCls( $api.dom('.head-btn'), 'hide' );
+		}else{
+			$api.removeCls( $api.dom('.head-btn'), 'hide' );
+		}
+	}
+    
+    //  System share
+    function funShare( obj ){
+        $api.hasLoginIn(obj, function( obj ){
+            var sharedMsg = {
+                text : "http:www.baidu.com/",
+                type : "text"
+            };
+        	allVar.shareAction = api.require('shareAction');
+            allVar.shareAction.share(sharedMsg);
+        });
+    }    
+    
+    //  Share of goods
+    function funPopup ( obj ){
+		allVar.share = allVar.param;
+		allVar.share = {
+			scene : obj.el.getAttribute('data-share-scene'),
+			id : allVar.share.product_id,
+			title : allVar.share.name,
+			thumb : allVar.share.image_url
+		};
+        $api.popup( obj );
+    }
+    
+    //  Format time stamp
+    function formatTimeStamp( date ){
+            var d = new Date( Number( date ) * 1000 );
+            return d.getFullYear()+'-'+zerofill( d.getMonth() )+'-'+zerofill( d.getDate() )+' '+zerofill( d.getHours() )+':'+zerofill( d.getMinutes() );
+        function zerofill( num ){
+            return num < 10 ? '0' + num : num;
+        }
+    }
+    
+    //
+    function flashBuyTimer(endtime){
+	    if(endtime){
+	        endtime = parseInt(endtime);
+	        var ts = endtime*1000 - (new Date());//计算剩余的毫秒数 
+	        if(ts < 0){
+	            return;
+	        }
+	        var dd = parseInt(ts / 1000 / 60 / 60 / 24, 10);//计算剩余的天数  
+	        var hh = parseInt(ts / 1000 / 60 / 60 % 24, 10);//计算剩余的小时数  
+	        var mm = parseInt(ts / 1000 / 60 % 60, 10);//计算剩余的分钟数  
+	        var ss = parseInt(ts / 1000 % 60, 10);//计算剩余的秒数 
+	        var ii = parseInt(ts % 60 / 10, 10);
+	        document.getElementById("flash-buy-info").innerHTML = '<p class="flash-buy-info-time">距抢购结束:<span><span class="moo-time value">'+ dd +
+	        '</span>天' + '<span class="moo-time value">' + hh + '</span>时' +'<span class="moo-time value">' + mm + 
+	        '</span>分'+'<span class="moo-time value">' + ss + '</span>秒'+'<span class="moo-time" style="font-size:1.8rem;">'+ii+
+	        '</span><span></p>'; 
+	    }
+	}
+</script>

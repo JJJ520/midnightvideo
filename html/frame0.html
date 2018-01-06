@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>云API</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <style>
+        .empty{ text-align: center; padding: 120px 0; }
+    </style>
+</head>
+<body>
+    <div tapmode="hover" onclick="api.openWin({name:'video',url:'./video.html'})">
+        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502217728322&di=7e553aad02e7224e81b1927c28d9ea58&imgtype=jpg&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F29381f30e924b8994121662564061d950a7bf68a.jpg" style="width: 100%;" />
+        <p style="font-size:1.5rem;padding: 5px;">播放器一</p>
+    </div>
+    <div tapmode="hover" onclick="api.openWin({name:'video',url:'./video2.html'})">
+        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502217728322&di=7e553aad02e7224e81b1927c28d9ea58&imgtype=jpg&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F29381f30e924b8994121662564061d950a7bf68a.jpg" style="width: 100%;" />
+        <p style="font-size:1.5rem;padding: 5px;">播放器二</p>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    var videoPlayer;
+    apiready = function() {
+        videoPlayer = api.require('videoPlayer');
+    };
+
+    function fnPlay(){
+        var videoPlayer = api.require('videoPlayer');
+        videoPlayer.play({
+            texts: {
+                head: {
+                    title: '顶部文字'
+                }
+            },
+            styles: {
+                head: { 
+                    bg: 'rgba(0.5,0.5,0.5,0.7)', 
+                    height: 44,
+                    titleSize: 16,
+                    titleColor: '#fff',
+                    backSize: 20,
+                    backImg: 'widget://image/back.png', 
+                    setSize: 20,
+                    setImg: 'widget://image/set.png' 
+                },
+                
+            },
+            path: 'http://resource.apicloud.com/video/apicloud3.mp4',
+            autoPlay:true
+        },function(ret, err) {
+             alert(JSON.stringify(ret));
+            if (ret) {
+                alert(JSON.stringify(ret));
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+
+    function fnOpen(){
+        videoPlayer.open({
+            rect:{
+                y:30,
+                h:150
+            },
+            autoPlay: true,
+            path: 'http://resource.apicloud.com/video/apicloud3.mp4'
+        }, function(ret, err){        
+            if( ret.status ){
+                alert( JSON.stringify( ret ) );
+            }else{
+                alert( JSON.stringify( err ) );
+            }
+        });
+    }
+    function fnSetPath(){
+        videoPlayer.setPath({
+            path: 'http://resource.apicloud.com/video/apicloud3.mp4'
+        });
+    }
+    function fnStart(){
+        videoPlayer.start();
+    }
+    function fnPause(){
+        videoPlayer.pause();
+    }
+    function fnStop(){
+        videoPlayer.stop();
+    }
+    function fnClose(){
+        videoPlayer.close();
+    }
+    function fnShow(){
+        videoPlayer.show();
+    }
+    function fnHide(){
+        videoPlayer.hide();
+    }
+    function fnFullScreen(){
+        videoPlayer.fullScreen();
+    }
+    function fnCancelFullScreen(){
+        videoPlayer.cancelFullScreen();
+    }
+    function fnForward(){
+        videoPlayer.forward({
+            seconds: 5
+        });
+    }
+    function fnRewind(){
+        videoPlayer.rewind({
+            seconds: 5
+        });
+    }
+    function fnSeekTo(){
+        videoPlayer.seekTo({
+            seconds: 20
+        });
+    }
+    function fnSetBrightness(){
+        videoPlayer.setBrightness({
+            brightness: 50
+        });
+    }
+    function fnGetBrightness(){
+        videoPlayer.getBrightness(function( ret, err ){        
+            if( ret ){
+                alert( JSON.stringify( ret ) );
+            }else{
+                alert( JSON.stringify( err ) );
+            }
+        });
+    }
+    function fnSetVolume(){
+        videoPlayer.setVolume({
+            volume: 0.6
+        });
+    }
+    function fnGetVolume(){
+        videoPlayer.getVolume(function( ret, err ){        
+            if( ret ){
+                alert( JSON.stringify( ret ) );
+            }else{
+                alert( JSON.stringify( err ) );
+            }
+        });
+    }
+    function fnAddEventListener(){
+        videoPlayer.addEventListener({
+            name:'leftUp'
+        }, function(ret, err){        
+            if( ret ){
+                alert( JSON.stringify( ret ) );
+            }else{
+                alert( JSON.stringify( err ) );
+            }
+        });
+    }
+    function fnRemoveEventListener(){
+        videoPlayer.removeEventListener({
+            name: 'leftUp'
+        });
+    }
+    function fnSetRect(){
+        videoPlayer.setRect({
+            rect:{
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            },
+            fullscreen: true
+        });
+    }
+
+</script>
